@@ -31,8 +31,8 @@
       build_treat_warnings_as_errors="No"
       c_additional_options=""
       c_preprocessor_definitions="BOARD_CUSTOM;CONFIG_GPIO_AS_PINRESET;FLOAT_ABI_HARD;INITIALIZE_USER_SECTIONS;NO_VTOR_CONFIG;NRF52833_XXAA;DEBUG"
-      c_user_include_directories="C:/Users/Pingwin/code/DWM3001C-starter-firmware/docker/include;Src/platform;C:/Users/Pingwin/code/DWM3001C-starter-firmware/nRF5_SDK_17.0.2_d674dde/components/drivers_nrf/nrf_soc_nosd;C:/Users/Pingwin/code/DWM3001C-starter-firmware/nRF5_SDK_17.0.2_d674dde/components/boards;C:/Users/Pingwin/code/DWM3001C-starter-firmware/nRF5_SDK_17.0.2_d674dde/components/toolchain/cmsis/include;C:/Users/Pingwin/code/DWM3001C-starter-firmware/nRF5_SDK_17.0.2_d674dde/components/libraries/balloc;C:/Users/Pingwin/code/DWM3001C-starter-firmware/nRF5_SDK_17.0.2_d674dde/components/libraries/ringbuf;C:/Users/Pingwin/code/DWM3001C-starter-firmware/nRF5_SDK_17.0.2_d674dde/components/libraries/log;C:/Users/Pingwin/code/DWM3001C-starter-firmware/nRF5_SDK_17.0.2_d674dde/components/libraries/log/src;C:/Users/Pingwin/code/DWM3001C-starter-firmware/nRF5_SDK_17.0.2_d674dde/components/libraries/memobj;C:/Users/Pingwin/code/DWM3001C-starter-firmware/nRF5_SDK_17.0.2_d674dde/components/libraries/util;C:/Users/Pingwin/code/DWM3001C-starter-firmware/nRF5_SDK_17.0.2_d674dde/components/libraries/atomic;C:/Users/Pingwin/code/DWM3001C-starter-firmware/nRF5_SDK_17.0.2_d674dde/components/libraries/delay;C:/Users/Pingwin/code/DWM3001C-starter-firmware/nRF5_SDK_17.0.2_d674dde/components/libraries/experimental_section_vars;C:/Users/Pingwin/code/DWM3001C-starter-firmware/nRF5_SDK_17.0.2_d674dde/components/libraries/strerror;C:/Users/Pingwin/code/DWM3001C-starter-firmware/nRF5_SDK_17.0.2_d674dde/modules/nrfx;C:/Users/Pingwin/code/DWM3001C-starter-firmware/nRF5_SDK_17.0.2_d674dde/modules/nrfx/hal;C:/Users/Pingwin/code/DWM3001C-starter-firmware/nRF5_SDK_17.0.2_d674dde/modules/nrfx/mdk;C:/Users/Pingwin/code/DWM3001C-starter-firmware/nRF5_SDK_17.0.2_d674dde/modules/nrfx/drivers/include;C:/Users/Pingwin/code/DWM3001C-starter-firmware/nRF5_SDK_17.0.2_d674dde/integration/nrfx;C:/Users/Pingwin/code/DWM3001C-starter-firmware/nRF5_SDK_17.0.2_d674dde/integration/nrfx/legacy;C:/Users/Pingwin/code/DWM3001C-starter-firmware/nRF5_SDK_17.0.2_d674dde/external/fprintf;Src;Src/examples/examples_info;Src/examples/shared_data;Src/MAC_802_15_4;Src/MAC_802_15_8;Shared/dwt_uwb_driver/Inc"
-      debug_register_definition_file="C:/Users/Pingwin/code/DWM3001C-starter-firmware/nRF5_SDK_17.0.2_d674dde/modules/nrfx/mdk/nrf52833.svd"
+      c_user_include_directories="Src/platform;nRF5_SDK_17.0.2_d674dde/components/drivers_nrf/nrf_soc_nosd;nRF5_SDK_17.0.2_d674dde/components/boards;nRF5_SDK_17.0.2_d674dde/components/toolchain/cmsis/include;nRF5_SDK_17.0.2_d674dde/components/libraries/balloc;nRF5_SDK_17.0.2_d674dde/components/libraries/ringbuf;nRF5_SDK_17.0.2_d674dde/components/libraries/log;nRF5_SDK_17.0.2_d674dde/components/libraries/log/src;nRF5_SDK_17.0.2_d674dde/components/libraries/memobj;nRF5_SDK_17.0.2_d674dde/components/libraries/util;nRF5_SDK_17.0.2_d674dde/components/libraries/atomic;nRF5_SDK_17.0.2_d674dde/components/libraries/delay;nRF5_SDK_17.0.2_d674dde/components/libraries/experimental_section_vars;nRF5_SDK_17.0.2_d674dde/components/libraries/strerror;nRF5_SDK_17.0.2_d674dde/modules/nrfx;nRF5_SDK_17.0.2_d674dde/modules/nrfx/hal;nRF5_SDK_17.0.2_d674dde/modules/nrfx/mdk;nRF5_SDK_17.0.2_d674dde/modules/nrfx/drivers/include;nRF5_SDK_17.0.2_d674dde/integration/nrfx;nRF5_SDK_17.0.2_d674dde/integration/nrfx/legacy;nRF5_SDK_17.0.2_d674dde/external/fprintf;Src;Src/examples/examples_info;Src/examples/shared_data;Src/MAC_802_15_4;Src/MAC_802_15_8;Shared/dwt_uwb_driver/Inc"
+      debug_register_definition_file="nRF5_SDK_17.0.2_d674dde/modules/nrfx/mdk/nrf52833.svd"
       debug_target_connection="J-Link"
       gcc_all_warnings_command_line_options=""
       gcc_c_language_standard="c11"
@@ -51,7 +51,7 @@
       linker_section_placement_file="flash_placement.xml"
       linker_section_placement_macros="FLASH_PH_START=0x0;FLASH_PH_SIZE=0x80000;RAM_PH_START=0x20000000;RAM_PH_SIZE=0x20000;FLASH_START=0;FLASH_SIZE=0xe4000;RAM_START=0x20000000;RAM_SIZE=0x20000;DEFAULT_CONFIG_START=0x1d000;DEFAULT_CONFIG_SIZE=0x400;FCONFIG_START=0x1e000;FCONFIG_SIZE=0x1000;INIT_START=0x1f000"
       linker_section_placements_segments="FLASH RX 0x0 0x100000;RAM1 RWX 0x20000000 0x40000"
-      macros="NordicSDKDir=C:/Users/Pingwin/code/DWM3001C-starter-firmware/nRF5_SDK_17.0.2_d674dde;CMSIS_CONFIG_TOOL=C:/Users/Pingwin/code/DWM3001C-starter-firmware/nRF5_SDK_17.0.2_d674dde/external_tools/cmsisconfig/CMSIS_Configuration_Wizard"
+      macros="NordicSDKDir=nRF5_SDK_17.0.2_d674dde;CMSIS_CONFIG_TOOL=nRF5_SDK_17.0.2_d674dde/external_tools/cmsisconfig/CMSIS_Configuration_Wizard"
       project_can_build_in_parallel="Yes"
       project_directory=""
       project_type="Executable"
@@ -59,7 +59,7 @@
     <configuration
       Name="Debug"
       build_output_directory="Output/Common/Exe"
-      debug_register_definition_file="C:/Users/Pingwin/code/DWM3001C-starter-firmware/nRF5_SDK_17.0.2_d674dde/modules/nrfx/mdk/nrf52833.svd"
+      debug_register_definition_file="nRF5_SDK_17.0.2_d674dde/modules/nrfx/mdk/nrf52833.svd"
       debug_target_connection="J-Link" />
     <folder Name="Setup">
       <file file_name="Setup/SEGGER_Flash.icf">
@@ -71,20 +71,6 @@
       <configuration
         Name="Debug"
         c_user_include_directories=".;./Src/platform" />
-      <folder Name="docker">
-        <configuration Name="Debug" build_exclude_from_build="Yes" />
-        <file file_name="C:/Users/Pingwin/code/DWM3001C-starter-firmware/docker/src/__vfprintf.c" />
-        <file file_name="C:/Users/Pingwin/code/DWM3001C-starter-firmware/docker/src/__vfscanf.c" />
-        <file file_name="C:/Users/Pingwin/code/DWM3001C-starter-firmware/docker/src/cmse.c" />
-        <file file_name="C:/Users/Pingwin/code/DWM3001C-starter-firmware/docker/src/cmse_nonsecure_call.S" />
-        <file file_name="C:/Users/Pingwin/code/DWM3001C-starter-firmware/docker/src/crt0.s" />
-        <file file_name="C:/Users/Pingwin/code/DWM3001C-starter-firmware/docker/src/ctype_no_wchar.c" />
-        <file file_name="C:/Users/Pingwin/code/DWM3001C-starter-firmware/docker/src/errno_no_thread.c" />
-        <file file_name="C:/Users/Pingwin/code/DWM3001C-starter-firmware/docker/src/heapwalk.js" />
-        <file file_name="C:/Users/Pingwin/code/DWM3001C-starter-firmware/docker/src/malloc.c" />
-        <file file_name="C:/Users/Pingwin/code/DWM3001C-starter-firmware/docker/src/thumb_crt0.s" />
-        <file file_name="C:/Users/Pingwin/code/DWM3001C-starter-firmware/docker/src/user_libc.c" />
-      </folder>
       <folder Name="examples">
         <folder Name="ex_00a_reading_dev_id">
           <file file_name="Src/examples/ex_00a_reading_dev_id/read_dev_id.c" />
@@ -240,28 +226,28 @@
       </folder>
       <folder Name="SDK">
         <folder Name="nRF_Common">
-          <file file_name="C:/Users/Pingwin/code/DWM3001C-starter-firmware/nRF5_SDK_17.0.2_d674dde/components/boards/boards.c" />
-          <file file_name="C:/Users/Pingwin/code/DWM3001C-starter-firmware/nRF5_SDK_17.0.2_d674dde/modules/nrfx/mdk/system_nrf52833.c" />
+          <file file_name="nRF5_SDK_17.0.2_d674dde/components/boards/boards.c" />
+          <file file_name="nRF5_SDK_17.0.2_d674dde/modules/nrfx/mdk/system_nrf52833.c" />
         </folder>
         <folder Name="nRF_Drivers">
-          <file file_name="C:/Users/Pingwin/code/DWM3001C-starter-firmware/nRF5_SDK_17.0.2_d674dde/integration/nrfx/legacy/nrf_drv_clock.c" />
-          <file file_name="C:/Users/Pingwin/code/DWM3001C-starter-firmware/nRF5_SDK_17.0.2_d674dde/integration/nrfx/legacy/nrf_drv_spi.c" />
-          <file file_name="C:/Users/Pingwin/code/DWM3001C-starter-firmware/nRF5_SDK_17.0.2_d674dde/modules/nrfx/drivers/src/nrfx_clock.c" />
-          <file file_name="C:/Users/Pingwin/code/DWM3001C-starter-firmware/nRF5_SDK_17.0.2_d674dde/modules/nrfx/drivers/src/nrfx_gpiote.c" />
-          <file file_name="C:/Users/Pingwin/code/DWM3001C-starter-firmware/nRF5_SDK_17.0.2_d674dde/modules/nrfx/drivers/src/prs/nrfx_prs.c" />
-          <file file_name="C:/Users/Pingwin/code/DWM3001C-starter-firmware/nRF5_SDK_17.0.2_d674dde/modules/nrfx/drivers/src/nrfx_spi.c" />
-          <file file_name="C:/Users/Pingwin/code/DWM3001C-starter-firmware/nRF5_SDK_17.0.2_d674dde/modules/nrfx/drivers/src/nrfx_spim.c" />
+          <file file_name="nRF5_SDK_17.0.2_d674dde/integration/nrfx/legacy/nrf_drv_clock.c" />
+          <file file_name="nRF5_SDK_17.0.2_d674dde/integration/nrfx/legacy/nrf_drv_spi.c" />
+          <file file_name="nRF5_SDK_17.0.2_d674dde/modules/nrfx/drivers/src/nrfx_clock.c" />
+          <file file_name="nRF5_SDK_17.0.2_d674dde/modules/nrfx/drivers/src/nrfx_gpiote.c" />
+          <file file_name="nRF5_SDK_17.0.2_d674dde/modules/nrfx/drivers/src/prs/nrfx_prs.c" />
+          <file file_name="nRF5_SDK_17.0.2_d674dde/modules/nrfx/drivers/src/nrfx_spi.c" />
+          <file file_name="nRF5_SDK_17.0.2_d674dde/modules/nrfx/drivers/src/nrfx_spim.c" />
         </folder>
         <folder Name="nRF_Libraries">
-          <file file_name="C:/Users/Pingwin/code/DWM3001C-starter-firmware/nRF5_SDK_17.0.2_d674dde/components/libraries/util/app_error.c" />
-          <file file_name="C:/Users/Pingwin/code/DWM3001C-starter-firmware/nRF5_SDK_17.0.2_d674dde/components/libraries/util/app_error_handler_gcc.c" />
-          <file file_name="C:/Users/Pingwin/code/DWM3001C-starter-firmware/nRF5_SDK_17.0.2_d674dde/components/libraries/util/app_error_weak.c" />
-          <file file_name="C:/Users/Pingwin/code/DWM3001C-starter-firmware/nRF5_SDK_17.0.2_d674dde/components/libraries/util/app_util_platform.c" />
-          <file file_name="C:/Users/Pingwin/code/DWM3001C-starter-firmware/nRF5_SDK_17.0.2_d674dde/components/libraries/atomic/nrf_atomic.c" />
-          <file file_name="C:/Users/Pingwin/code/DWM3001C-starter-firmware/nRF5_SDK_17.0.2_d674dde/components/libraries/balloc/nrf_balloc.c" />
-          <file file_name="C:/Users/Pingwin/code/DWM3001C-starter-firmware/nRF5_SDK_17.0.2_d674dde/components/libraries/log/src/nrf_log_frontend.c" />
-          <file file_name="C:/Users/Pingwin/code/DWM3001C-starter-firmware/nRF5_SDK_17.0.2_d674dde/components/libraries/memobj/nrf_memobj.c" />
-          <file file_name="C:/Users/Pingwin/code/DWM3001C-starter-firmware/nRF5_SDK_17.0.2_d674dde/components/libraries/strerror/nrf_strerror.c" />
+          <file file_name="nRF5_SDK_17.0.2_d674dde/components/libraries/util/app_error.c" />
+          <file file_name="nRF5_SDK_17.0.2_d674dde/components/libraries/util/app_error_handler_gcc.c" />
+          <file file_name="nRF5_SDK_17.0.2_d674dde/components/libraries/util/app_error_weak.c" />
+          <file file_name="nRF5_SDK_17.0.2_d674dde/components/libraries/util/app_util_platform.c" />
+          <file file_name="nRF5_SDK_17.0.2_d674dde/components/libraries/atomic/nrf_atomic.c" />
+          <file file_name="nRF5_SDK_17.0.2_d674dde/components/libraries/balloc/nrf_balloc.c" />
+          <file file_name="nRF5_SDK_17.0.2_d674dde/components/libraries/log/src/nrf_log_frontend.c" />
+          <file file_name="nRF5_SDK_17.0.2_d674dde/components/libraries/memobj/nrf_memobj.c" />
+          <file file_name="nRF5_SDK_17.0.2_d674dde/components/libraries/strerror/nrf_strerror.c" />
         </folder>
       </folder>
       <folder Name="SEGGER">
@@ -291,8 +277,8 @@
       <file file_name="Src/main.c" />
     </folder>
     <folder Name="System">
-      <file file_name="C:/Users/Pingwin/code/DWM3001C-starter-firmware/nRF5_SDK_17.0.2_d674dde/modules/nrfx/mdk/ses_startup_nrf52833.s" />
-      <file file_name="C:/Users/Pingwin/code/DWM3001C-starter-firmware/nRF5_SDK_17.0.2_d674dde/modules/nrfx/mdk/ses_startup_nrf_common.s" />
+      <file file_name="nRF5_SDK_17.0.2_d674dde/modules/nrfx/mdk/ses_startup_nrf52833.s" />
+      <file file_name="nRF5_SDK_17.0.2_d674dde/modules/nrfx/mdk/ses_startup_nrf_common.s" />
       <file file_name="$(StudioDir)/source/thumb_crt0.s" />
     </folder>
   </project>
