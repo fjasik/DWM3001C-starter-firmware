@@ -55,7 +55,7 @@ Revision: $Rev: 12804 $
 #include <stdio.h>
 #include "limits.h"
 #include "__libc.h"
-#include "__vfprintf.h"
+//#include "__vfprintf.h"
 
 /*********************************************************************
 *

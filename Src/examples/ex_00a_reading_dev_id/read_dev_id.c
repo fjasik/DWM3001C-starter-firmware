@@ -23,7 +23,7 @@
 extern void test_run_info(unsigned char *data);
 
 /* Example application name and version to display on LCD screen/VCOM port. */
-#define APP_NAME "READ DEV ID      "
+#define APP_NAME "Pingwin Huddle test 0\r\n"
 
 /**
  * Application entry point.

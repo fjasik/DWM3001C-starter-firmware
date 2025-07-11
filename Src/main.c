@@ -90,8 +90,8 @@ int main(void)
     nrf_delay_ms(2);
 
     // UNCOMMENT EXACTLY ONE OF THE BELOW EXAMPLES, AND ALSO UNCOMMENT THE CORRESPONDING #define IN example_selection.h:
-    extern int read_dev_id(void); read_dev_id();
-    // extern int simple_tx(void); simple_tx();
+    //extern int read_dev_id(void); read_dev_id();
+    extern int simple_tx(void); simple_tx();
     // extern int simple_tx_pdoa(void); simple_tx_pdoa();
     // extern int simple_rx(void); simple_rx();
     // extern int simple_rx_nlos(void); simple_rx_nlos();

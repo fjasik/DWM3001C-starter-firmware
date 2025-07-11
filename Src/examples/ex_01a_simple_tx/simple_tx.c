@@ -24,7 +24,7 @@
 extern void test_run_info(unsigned char *data);
 
 /* Example application name */
-#define APP_NAME "SIMPLE TX v1.0"
+#define APP_NAME "Pingwin Huddle UWB firmware TX v1.0\r\n"
 
 /* Default communication configuration. We use default non-STS DW mode. */
 static dwt_config_t config = {
@@ -48,7 +48,7 @@ static dwt_config_t config = {
  *     - byte 1: sequence number, incremented for each new frame.
  *     - byte 2 -> 9: device ID, see NOTE 1 below.
  */
-static uint8_t tx_msg[] = { 0xC5, 0, 'D', 'E', 'C', 'A', 'W', 'A', 'V', 'E' };
+static uint8_t tx_msg[] = { 0xC5, 0, 'P', 'i', 'n', 'g', 'w', 'i', 'n', '0' };
 /* Index to access to sequence number of the blink frame in the tx_msg array. */
 #define BLINK_FRAME_SN_IDX 1
 
@@ -129,7 +129,7 @@ int simple_tx(void)
         /* Clear TX frame sent event. */
         dwt_writesysstatuslo(DWT_INT_TXFRS_BIT_MASK);
 
-        test_run_info((unsigned char *)"TX Frame Sent");
+        test_run_info((unsigned char *)"TX Frame Sent\r\n");
 
         /* Execute a delay between transmissions. */
         Sleep(TX_DELAY_MS);
