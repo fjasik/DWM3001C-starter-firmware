@@ -31,7 +31,7 @@
 extern void test_run_info(unsigned char *data);
 
 /* Example application name */
-#define APP_NAME "SS TWR INIT v1.0"
+#define APP_NAME  "Pingwin Huddle UWB firmware SS TWR INIT v1.0"
 
 /* Default communication configuration. We use default non-STS DW mode. */
 static dwt_config_t config = {
@@ -57,9 +57,15 @@ static dwt_config_t config = {
 #define TX_ANT_DLY 16385
 #define RX_ANT_DLY 16385
 
+// Pingwin defined hardcoded addresses for now (netowrk order)
+#define FRAME_CTRL 0x41, 0x88 // 0x8841 - 16-bit addressing
+#define PAN_ID     0x48, 0x50 // PH - Pingwin Huddle
+#define INIT_ADDR  0x00, 0x01
+#define RESP_ADDR  0x10, 0x01
+
 /* Frames used in the ranging process. See NOTE 3 below. */
-static uint8_t tx_poll_msg[] = { 0x41, 0x88, 0, 0xCA, 0xDE, 'W', 'A', 'V', 'E', 0xE0, 0, 0 };
-static uint8_t rx_resp_msg[] = { 0x41, 0x88, 0, 0xCA, 0xDE, 'V', 'E', 'W', 'A', 0xE1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+static uint8_t tx_poll_msg[] = { FRAME_CTRL, 0, PAN_ID, RESP_ADDR, INIT_ADDR, 0xE0, 0, 0 };
+static uint8_t rx_resp_msg[] = { FRAME_CTRL, 0, PAN_ID, INIT_ADDR, RESP_ADDR, 0xE1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 /* Length of the common part of the message (up to and including the function code, see NOTE 3 below). */
 #define ALL_MSG_COMMON_LEN 10
 /* Indexes to access some of the fields in the frames defined above. */
@@ -210,7 +216,7 @@ int ss_twr_initiator(void)
                     tof = ((rtd_init - rtd_resp * (1 - clockOffsetRatio)) / 2.0) * DWT_TIME_UNITS;
                     distance = tof * SPEED_OF_LIGHT;
                     /* Display computed distance on LCD. */
-                    snprintf(dist_str, sizeof(dist_str), "DIST: %3.2f m", distance);
+                    snprintf(dist_str, sizeof(dist_str), "DIST: %3.2f m\r\n", distance);
                     test_run_info((unsigned char *)dist_str);
                 }
             }
@@ -272,7 +278,7 @@ int ss_twr_initiator(void)
  *    after an exchange of specific messages used to define those short addresses for each device participating to the ranging exchange.
  * 5. This timeout is for complete reception of a frame, i.e. timeout duration must take into account the length of the expected frame. Here the value
  *    is arbitrary but chosen large enough to make sure that there is enough time to receive the complete response frame sent by the responder at the
- *    6.8M data rate used (around 400 µs).
+ *    6.8M data rate used (around 400 ï¿½s).
  * 6. In a real application, for optimum performance within regulatory limits, it may be necessary to set TX pulse bandwidth and TX power, (using
  *    the dwt_configuretxrf API call) to per device calibrated values saved in the target system or the DW IC OTP memory.
  * 7. dwt_writetxdata() takes the full size of the message as a parameter but only copies (size - 2) bytes as the check-sum at the end of the frame is

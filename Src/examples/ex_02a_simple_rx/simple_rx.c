@@ -25,7 +25,7 @@
 extern void test_run_info(unsigned char *data);
 
 /* Example application name */
-#define APP_NAME "SIMPLE RX v1.0"
+#define APP_NAME "Pingwin Huddle UWB firmware RX v1.0\r\n"
 
 /* Default communication configuration. We use default non-STS DW mode. */
 static dwt_config_t config = {
@@ -121,7 +121,9 @@ int simple_rx(void)
             /* Clear good RX frame event in the DW IC status register. */
             dwt_writesysstatuslo(DWT_INT_RXFCG_BIT_MASK);
 
-            test_run_info((unsigned char *)"Frame Received");
+            test_run_info((unsigned char *)"Frame Received - ");
+            test_run_info((unsigned char *)&rx_buffer[2]);
+            test_run_info((unsigned char *)"\r\n");
         }
         else
         {

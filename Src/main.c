@@ -72,6 +72,13 @@ void test_run_info(unsigned char *data)
     printf("%s\n", data);
 }
 
+#define PINGWIN_CONFIG_INITIATOR
+//#define PINGWIN_CONFIG_RESPONDER
+
+#if defined(PINGWIN_CONFIG_INITIATOR) && defined(PINGWIN_CONFIG_RESPONDER)
+#error "Choose your correct Pingwin configuration"
+#endif
+
 int main(void)
 {
     /* Initialize all configured peripherals */
@@ -89,11 +96,21 @@ int main(void)
     /* Small pause before startup */
     nrf_delay_ms(2);
 
+#ifdef PINGWIN_CONFIG_INITIATOR
+    extern int pingwin_ss_twr_initiator(void); 
+    pingwin_ss_twr_initiator();
+#endif
+
+#ifdef PINGWIN_CONFIG_RESPONDER
+    extern int pingwin_ss_twr_responder(void); 
+    pingwin_ss_twr_responder();
+#endif
+
     // UNCOMMENT EXACTLY ONE OF THE BELOW EXAMPLES, AND ALSO UNCOMMENT THE CORRESPONDING #define IN example_selection.h:
     //extern int read_dev_id(void); read_dev_id();
-    extern int simple_tx(void); simple_tx();
+    //extern int simple_tx(void); simple_tx();
     // extern int simple_tx_pdoa(void); simple_tx_pdoa();
-    // extern int simple_rx(void); simple_rx();
+    //extern int simple_rx(void); simple_rx();
     // extern int simple_rx_nlos(void); simple_rx_nlos();
     // extern int rx_sniff(void); rx_sniff();
     // extern int rx_with_xtal_trim(void); rx_with_xtal_trim();
@@ -108,8 +125,8 @@ int main(void)
     // extern int tx_wait_resp(void); tx_wait_resp();
     // extern int tx_wait_resp_int(void); tx_wait_resp_int();
     // extern int rx_send_resp(void); rx_send_resp();
-    // extern int ss_twr_responder(void); ss_twr_responder();
-    // extern int ss_twr_initiator(void); ss_twr_initiator();
+    //extern int ss_twr_responder(void); ss_twr_responder();
+    //extern int ss_twr_initiator(void); ss_twr_initiator();
     // extern int ss_twr_initiator_sts(void); ss_twr_initiator_sts();
     // extern int ss_twr_responder_sts(void); ss_twr_responder_sts();
     // extern int ss_twr_initiator_sts_no_data(void); ss_twr_initiator_sts_no_data();

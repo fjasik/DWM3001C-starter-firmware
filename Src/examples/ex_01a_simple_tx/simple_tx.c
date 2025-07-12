@@ -55,7 +55,7 @@ static uint8_t tx_msg[] = { 0xC5, 0, 'P', 'i', 'n', 'g', 'w', 'i', 'n', '0' };
 #define FRAME_LENGTH (sizeof(tx_msg) + FCS_LEN) // The real length that is going to be transmitted
 
 /* Inter-frame delay period, in milliseconds. */
-#define TX_DELAY_MS 500
+#define TX_DELAY_MS 2000
 
 /* Values for the PG_DELAY and TX_POWER registers reflect the bandwidth and power of the spectrum at the current
  * temperature. These values can be calibrated prior to taking reference measurements. See NOTE 2 below. */

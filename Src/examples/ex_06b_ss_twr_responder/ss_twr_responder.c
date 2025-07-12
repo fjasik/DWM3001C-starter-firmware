@@ -29,7 +29,7 @@
 extern void test_run_info(unsigned char *data);
 
 /* Example application name */
-#define APP_NAME "SS TWR RESP v1.0"
+#define APP_NAME "Pingwin Huddle UWB firmware SS TWR RESP v1.0"
 
 /* Default communication configuration. We use default non-STS DW mode. */
 static dwt_config_t config = {
@@ -52,9 +52,21 @@ static dwt_config_t config = {
 #define TX_ANT_DLY 16385
 #define RX_ANT_DLY 16385
 
+// Pingwin defined hardcoded addresses for now (netowrk order)
+// This is taken from the ss_twr_initiator.c
+#define FRAME_CTRL 0x41, 0x88 // 0x8841 - 16-bit addressing
+#define PAN_ID     0x48, 0x50 // PH - Pingwin Huddle
+#define INIT_ADDR  0x00, 0x01
+#define RESP_ADDR  0x10, 0x01
+
+// Notice tx and rx position swapped wrt ss_twr_initiator.c
+static uint8_t rx_poll_msg[] = { FRAME_CTRL, 0, PAN_ID, RESP_ADDR, INIT_ADDR, 0xE0, 0, 0 };
+static uint8_t tx_resp_msg[] = { FRAME_CTRL, 0, PAN_ID, INIT_ADDR, RESP_ADDR, 0xE1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+
 /* Frames used in the ranging process. See NOTE 3 below. */
-static uint8_t rx_poll_msg[] = { 0x41, 0x88, 0, 0xCA, 0xDE, 'W', 'A', 'V', 'E', 0xE0, 0, 0 };
-static uint8_t tx_resp_msg[] = { 0x41, 0x88, 0, 0xCA, 0xDE, 'V', 'E', 'W', 'A', 0xE1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+// static uint8_t rx_poll_msg[] = { 0x41, 0x88, 0, 0xCA, 0xDE, 'W', 'A', 'V', 'E', 0xE0, 0, 0 };
+// static uint8_t tx_resp_msg[] = { 0x41, 0x88, 0, 0xCA, 0xDE, 'V', 'E', 'W', 'A', 0xE1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+
 /* Length of the common part of the message (up to and including the function code, see NOTE 3 below). */
 #define ALL_MSG_COMMON_LEN 10
 /* Index to access some of the fields in the frames involved in the process. */
@@ -170,6 +182,8 @@ int ss_twr_responder(void)
 
                     /* Retrieve poll reception timestamp. */
                     poll_rx_ts = get_rx_timestamp_u64();
+
+                    test_run_info((unsigned char *)"Good frame Received");
 
                     /* Compute response message transmission time. See NOTE 7 below. */
                     resp_tx_time = (poll_rx_ts + (POLL_RX_TO_RESP_TX_DLY_UUS * UUS_TO_DWT_TIME)) >> 8;

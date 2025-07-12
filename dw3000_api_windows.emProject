@@ -132,13 +132,13 @@
           <file file_name="Src/examples/ex_03b_rx_send_resp/rx_send_resp.c" />
         </folder>
         <folder Name="ex_03d_tx_wait_resp_interrupts">
+          <folder Name="ex_04b_cont_frame">
+            <file file_name="Src/examples/ex_04b_cont_frame/continuous_frame.c" />
+          </folder>
           <file file_name="Src/examples/ex_03d_tx_wait_resp_interrupts/tx_wait_resp_int.c" />
         </folder>
         <folder Name="ex_04a_cont_wave">
           <file file_name="Src/examples/ex_04a_cont_wave/continuous_wave.c" />
-        </folder>
-        <folder Name="ex_04b_cont_frame">
-          <file file_name="Src/examples/ex_04b_cont_frame/continuous_frame.c" />
         </folder>
         <folder Name="ex_05a_ds_twr_init">
           <file file_name="Src/examples/ex_05a_ds_twr_init/ds_twr_initiator.c" />
@@ -275,6 +275,8 @@
         </folder>
       </folder>
       <file file_name="Src/main.c" />
+      <file file_name="Src/pingwin_initiator.c" />
+      <file file_name="Src/pingwin_responder.c" />
     </folder>
     <folder Name="System">
       <file file_name="nRF5_SDK_17.0.2_d674dde/modules/nrfx/mdk/ses_startup_nrf52833.s" />
