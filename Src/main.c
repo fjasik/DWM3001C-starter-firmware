@@ -52,46 +52,93 @@ Purpose : DWM3001C build main entry point for simple exmaples.
 #include <port.h>
 #include <sdk_config.h>
 #include <stdio.h>
-#include <stdlib.h>
-#include <assert.h>
+#include "app_uart.h"
+#include "app_error.h"
+#include "nrf_delay.h"
+#include "nrf.h"
+#include "usb.h"
+#if defined (UART_PRESENT)
+#include "nrf_uart.h"
+#endif
+#if defined (UARTE_PRESENT)
+#include "nrf_uarte.h"
+#endif
 
-/*! ------------------------------------------------------------------------------------------------------------------
- * @fn test_run_info()
- *
- * @brief  This function is simply a printf() call for a string. It is implemented differently on other platforms,
- *         but on the DWM3001C, a printf() call is .
- *
- * @param data - Message data, this data should be NULL string.
- *
- * output parameters
- *
- * no return value
- */
+#define PINGWIN_CONFIG_INITIATOR
+//#define PINGWIN_CONFIG_RESPONDER
+
+#define UART_HWFC APP_UART_FLOW_CONTROL_DISABLED
+#define MAX_TEST_DATA_BYTES (15U)                    /**< max number of test bytes to be used for tx and rx. */
+#define UART_TX_BUF_SIZE 256                         /**< UART TX buffer size. */
+#define UART_RX_BUF_SIZE 256                         /**< UART RX buffer size. */
+
+#if defined(PINGWIN_CONFIG_INITIATOR) && defined(PINGWIN_CONFIG_RESPONDER)
+#error "Choose your correct Pingwin configuration"
+#endif
+
 void test_run_info(unsigned char *data)
 {
     printf("%s\n", data);
 }
 
-#define PINGWIN_CONFIG_INITIATOR
-//#define PINGWIN_CONFIG_RESPONDER
-
-#if defined(PINGWIN_CONFIG_INITIATOR) && defined(PINGWIN_CONFIG_RESPONDER)
-#error "Choose your correct Pingwin configuration"
-#endif
+void uart_error_handle(app_uart_evt_t * p_event)
+{
+    if (p_event->evt_type == APP_UART_COMMUNICATION_ERROR)
+    {
+        APP_ERROR_HANDLER(p_event->data.error_communication);
+    }
+    else if (p_event->evt_type == APP_UART_FIFO_ERROR)
+    {
+        APP_ERROR_HANDLER(p_event->data.error_code);
+    }
+}
 
 int main(void)
 {
     /* Initialize all configured peripherals */
     bsp_board_init(BSP_INIT_LEDS | BSP_INIT_BUTTONS);
 
-    /* Initialise DWM3001C GPIOs */
+    /* Initialise DWM3001C GPIO and SPI */
     gpio_init();
-
-    /* Initialise the SPI for DWM3001C */
     dwm3001c_spi_init();
-
-    /* Configuring interrupt*/
     dw_irq_init();
+
+    printf("Pingwin Huddle UWB firmware\r\n");
+
+    start_pingwin_usb();
+
+    // Cooking here
+    // const app_uart_comm_params_t comm_params =
+    // {
+    //     RX_PIN_NUMBER,
+    //     TX_PIN_NUMBER,
+    //     RTS_PIN_NUMBER,
+    //     CTS_PIN_NUMBER,
+    //     UART_HWFC,
+    //     false,
+    //     NRF_UART_BAUDRATE_115200
+    // };
+      
+    // uint32_t err_code;
+    // APP_UART_FIFO_INIT(&comm_params,
+    //     UART_RX_BUF_SIZE,
+    //     UART_TX_BUF_SIZE,
+    //     uart_error_handle,
+    //     APP_IRQ_PRIORITY_LOWEST,
+    //     err_code);
+
+    // APP_ERROR_CHECK(err_code);
+
+    // while (true)
+    // {
+    //     const char * msg = "pingwin\r\n";
+    //     for (size_t i = 0; msg[i] != '\0'; ++i)
+    //     {
+    //         while (app_uart_put(msg[i]) != NRF_SUCCESS);
+    //     }
+
+    //     nrf_delay_ms(1000);
+    // }
 
     /* Small pause before startup */
     nrf_delay_ms(2);
