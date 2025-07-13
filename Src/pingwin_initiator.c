@@ -1,4 +1,7 @@
+#include "debug.h"
 #include "deca_probe_interface.h"
+#include "twr_shared.h"
+
 #include <config_options.h>
 #include <deca_device_api.h>
 #include <deca_spi.h>
@@ -9,51 +12,8 @@
 
 #if defined(PINGWIN_SS_TWR_INITIATOR)
 
-extern void test_run_info(unsigned char *data);
-
-#define APP_NAME  "Pingwin Huddle UWB firmware SS TWR INIT v1.0"
-
-/* Default communication configuration. We use default non-STS DW mode. */
-static dwt_config_t config = {
-    5,                /* Channel number. */
-    DWT_PLEN_128,     /* Preamble length. Used in TX only. */
-    DWT_PAC8,         /* Preamble acquisition chunk size. Used in RX only. */
-    9,                /* TX preamble code. Used in TX only. */
-    9,                /* RX preamble code. Used in RX only. */
-    1,                /* 0 to use standard 8 symbol SFD, 1 to use non-standard 8 symbol, 2 for non-standard 16 symbol SFD and 3 for 4z 8 symbol SDF type */
-    DWT_BR_6M8,       /* Data rate. */
-    DWT_PHRMODE_STD,  /* PHY header mode. */
-    DWT_PHRRATE_STD,  /* PHY header rate. */
-    (129 + 8 - 8),    /* SFD timeout (preamble length + 1 + SFD length - PAC size). Used in RX only. */
-    DWT_STS_MODE_OFF, /* STS disabled */
-    DWT_STS_LEN_64,   /* STS length see allowed values in Enum dwt_sts_lengths_e */
-    DWT_PDOA_M0       /* PDOA mode off */
-};
-
 /* Inter-ranging delay period, in milliseconds. */
 #define RNG_DELAY_MS 1000
-
-/* Default antenna delay values for 64 MHz PRF. See NOTE 2 below. */
-#define TX_ANT_DLY 16385
-#define RX_ANT_DLY 16385
-
-// Pingwin defined hardcoded addresses for now (netowrk order)
-#define FRAME_CTRL 0x41, 0x88 // 0x8841 - 16-bit addressing
-#define PAN_ID     0x48, 0x50 // PH - Pingwin Huddle
-#define INIT_ADDR  0x42, 0xef // Hardcoded initiator address
-#define EMPTY_ADDR 0x00, 0x00  // Initially set to 0x00 0x00, to be replaced
-
-/* Frames used in the ranging process. See NOTE 3 below. */
-static uint8_t tx_poll_msg[] = { FRAME_CTRL, 0, PAN_ID, EMPTY_ADDR, INIT_ADDR, 0xE0, 0, 0 };
-static uint8_t rx_resp_msg[] = { FRAME_CTRL, 0, PAN_ID, INIT_ADDR, EMPTY_ADDR, 0xE1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-
-/* Length of the common part of the message (up to and including the function code, see NOTE 3 below). */
-#define ALL_MSG_COMMON_LEN 10
-/* Indexes to access some of the fields in the frames defined above. */
-#define ALL_MSG_SN_IDX          2
-#define RESP_MSG_POLL_RX_TS_IDX 10
-#define RESP_MSG_RESP_TX_TS_IDX 14
-#define RESP_MSG_TS_LEN         4
 
 /* Buffer to store received response message.
  * Its size is adjusted to longest frame that this example code is supposed to handle. */
@@ -76,51 +36,36 @@ static void mutate_addresses(uint16_t beacon_address) {
     uint8_t low_byte = beacon_address & 0xFF;
 
     // Update the RESP_ADDR field in both tx_poll_msg and rx_resp_msg
-    tx_poll_msg[5] = high_byte;
-    tx_poll_msg[6] = low_byte;
+    poll_msg[5] = high_byte;
+    poll_msg[6] = low_byte;
 
-    rx_resp_msg[7] = high_byte;
-    rx_resp_msg[8] = low_byte;
+    resp_msg[7] = high_byte;
+    resp_msg[8] = low_byte;
 }
 
 // Function to return the pointer to tx_poll_msg
 static uint8_t* get_tx_poll_msg(uint16_t beacon_address) {
     mutate_addresses(beacon_address);
-    return tx_poll_msg;
+    return poll_msg;
 }
 
 // Function to return the pointer to rx_resp_msg
 static uint8_t* get_rx_resp_msg(uint16_t beacon_address) {
     mutate_addresses(beacon_address);
-    return rx_resp_msg;
+    return resp_msg;
 }
-
-#define BEACON_COUNT 3
-const static uint16_t beacon_address_array[BEACON_COUNT] = {
-    0xaa69, // beacon 1
-    0xbb69, // beacon 2
-    0xcc69  // beacon 3
-};
 
 // Incremented per frame, per beacon connection
 static uint8_t beacon_seq_num_array[BEACON_COUNT] = {
     0,
+    0,
     0
 };
 
-/*! ------------------------------------------------------------------------------------------------------------------
- * @fn main()
- *
- * @brief Application entry point.
- *
- * @param  none
- *
- * @return none
- */
 int pingwin_ss_twr_initiator(void)
 {
     /* Display application name on LCD. */
-    test_run_info((unsigned char *)(APP_NAME "\r\n"));
+    debug_printf("Pingwin Huddle UWB firmware SS TWR INIT v1.0");
 
     /* Configure SPI rate, DW3000 supports up to 36 MHz */
     port_set_dw_ic_spi_fastrate();
@@ -136,7 +81,7 @@ int pingwin_ss_twr_initiator(void)
     while (!dwt_checkidlerc()) /* Need to make sure DW IC is in IDLE_RC before proceeding */ { };
     if (dwt_initialise(DWT_DW_INIT) == DWT_ERROR)
     {
-        test_run_info((unsigned char *)"INIT FAILED     ");
+        debug_printf("INIT FAILED     ");
         while (1) { };
     }
 
@@ -147,7 +92,7 @@ int pingwin_ss_twr_initiator(void)
     /* if the dwt_configure returns DWT_ERROR either the PLL or RX calibration has failed the host should reset the device */
     if (dwt_configure(&config))
     {
-        test_run_info((unsigned char *)"CONFIG FAILED     ");
+        debug_printf("CONFIG FAILED     ");
         while (1) { };
     }
 
@@ -177,13 +122,13 @@ int pingwin_ss_twr_initiator(void)
             mutate_addresses(beacon_address_array[beacon_index]);
 
             snprintf(output_buffer, sizeof(output_buffer), "Beacon: %u, ", beacon_index);
-            test_run_info((unsigned char *)output_buffer);
+            printf(output_buffer);
 
             /* Write frame data to DW IC and prepare transmission. See NOTE 7 below. */
-            tx_poll_msg[ALL_MSG_SN_IDX] = beacon_seq_num_array[beacon_index];
+            poll_msg[ALL_MSG_SN_IDX] = beacon_seq_num_array[beacon_index];
             dwt_writesysstatuslo(DWT_INT_TXFRS_BIT_MASK);
-            dwt_writetxdata(sizeof(tx_poll_msg), tx_poll_msg, 0); /* Zero offset in TX buffer. */
-            dwt_writetxfctrl(sizeof(tx_poll_msg), 0, 1);          /* Zero offset in TX buffer, ranging. */
+            dwt_writetxdata(sizeof(poll_msg), poll_msg, 0); /* Zero offset in TX buffer. */
+            dwt_writetxfctrl(sizeof(poll_msg), 0, 1);          /* Zero offset in TX buffer, ranging. */
 
             /* Start transmission, indicating that a response is expected so that reception is enabled automatically after the frame is sent and the delay
             * set by dwt_setrxaftertxdelay() has elapsed. */
@@ -201,7 +146,7 @@ int pingwin_ss_twr_initiator(void)
             {
                 /* Clear RX error/timeout events in the DW IC status register. */
                 dwt_writesysstatuslo(SYS_STATUS_ALL_RX_TO | SYS_STATUS_ALL_RX_ERR);
-                test_run_info((unsigned char *)"Timeout or error\r\n");
+                debug_printf("Timeout or error\r\n");
                 continue;
             }
 
@@ -213,7 +158,7 @@ int pingwin_ss_twr_initiator(void)
             frame_len = dwt_getframelength();
             if (frame_len > sizeof(rx_buffer))
             {
-                test_run_info((unsigned char *)"Frame too big\r\n");
+                debug_printf("Frame too big\r\n");
                 continue;
             }
 
@@ -223,9 +168,9 @@ int pingwin_ss_twr_initiator(void)
             /* Check that the frame is the expected response from the companion "SS TWR responder" example.
                 * As the sequence number field of the frame is not relevant, it is cleared to simplify the validation of the frame. */
             rx_buffer[ALL_MSG_SN_IDX] = 0;
-            if (memcmp(rx_buffer, rx_resp_msg, ALL_MSG_COMMON_LEN) != 0)
+            if (memcmp(rx_buffer, resp_msg, ALL_MSG_COMMON_LEN) != 0)
             {
-                test_run_info((unsigned char *)"Frame header mismatch\r\n");
+                debug_printf("Frame header mismatch\r\n");
                 continue;
             }
 
@@ -253,7 +198,7 @@ int pingwin_ss_twr_initiator(void)
 
             /* Display computed distance on LCD. */
             snprintf(output_buffer, sizeof(output_buffer), "Distance: %3.2f m\r\n", distance);
-            test_run_info((unsigned char *)output_buffer);
+            printf(output_buffer);
         }
 
         Sleep(RNG_DELAY_MS);        

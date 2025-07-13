@@ -1,3 +1,4 @@
+#include "debug.h"
 #include "nrf_delay.h"
 #include "usb.h"
 
@@ -11,14 +12,15 @@
 // #define PINGWIN_CONFIG_RESPONDER
 
 #define UART_HWFC APP_UART_FLOW_CONTROL_DISABLED
-#define MAX_TEST_DATA_BYTES (15U) /**< max number of test bytes to be used for tx and rx. */
-#define UART_TX_BUF_SIZE 256 /**< UART TX buffer size. */
-#define UART_RX_BUF_SIZE 256 /**< UART RX buffer size. */
+#define MAX_TEST_DATA_BYTES (15U) // max number of test bytes to be used for tx and rx
+#define UART_TX_BUF_SIZE 256      // UART TX buffer size
+#define UART_RX_BUF_SIZE 256      // UART RX buffer size
 
 #if defined(PINGWIN_CONFIG_INITIATOR) && defined(PINGWIN_CONFIG_RESPONDER)
     #error "Choose your correct Pingwin configuration"
 #endif
 
+// Keep in case we want to run other examples
 void test_run_info(unsigned char* data) {
     printf("%s\n", data);
 }
@@ -31,8 +33,6 @@ int main(void) {
     gpio_init();
     dwm3001c_spi_init();
     dw_irq_init();
-
-    printf("Pingwin Huddle UWB firmware\r\n");
 
     // Legendary stuff here
     start_pingwin_usb();
@@ -50,6 +50,5 @@ int main(void) {
     pingwin_ss_twr_responder();
 #endif
 
-    while (1) {
-    }
+    while (1) { }
 }

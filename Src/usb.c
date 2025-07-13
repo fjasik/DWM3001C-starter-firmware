@@ -1,3 +1,4 @@
+#include "debug.h"
 #include "app_error.h"
 #include "app_timer.h"
 #include "app_usbd.h"
@@ -8,6 +9,7 @@
 #include "nrf_drv_clock.h"
 #include "nrf_drv_usbd.h"
 
+#include <stdint.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdio.h>
@@ -54,6 +56,8 @@ static char m_rx_buffer[READ_SIZE];
 static char m_tx_buffer[NRF_DRV_USBD_EPSIZE];
 static bool m_send_flag = 0;
 
+#define debug_printf(fmt, ...) printf(fmt "\n\n", ##__VA_ARGS__)
+
 /**
  * @brief User event handler @ref app_usbd_cdc_acm_user_ev_handler_t
  * (headphones)
@@ -80,11 +84,11 @@ static void cdc_acm_user_ev_handler(
         break;
     case APP_USBD_CDC_ACM_USER_EVT_RX_DONE: {
         ret_code_t ret;
-        printf("Bytes waiting: %d", app_usbd_cdc_acm_bytes_stored(p_cdc_acm));
+        debug_printf("Bytes waiting: %d", app_usbd_cdc_acm_bytes_stored(p_cdc_acm));
         do {
             /*Get amount of data transfered*/
             size_t size = app_usbd_cdc_acm_rx_size(p_cdc_acm);
-            printf("RX: size: %lu char: %c", size, m_rx_buffer[0]);
+            debug_printf("RX: size: %lu char: %c", size, m_rx_buffer[0]);
 
             /* Fetch data until internal buffer is empty */
             ret = app_usbd_cdc_acm_read(&m_app_cdc_acm, m_rx_buffer, READ_SIZE);
@@ -113,18 +117,18 @@ static void usbd_user_ev_handler(app_usbd_event_type_t event) {
         bsp_board_leds_off();
         break;
     case APP_USBD_EVT_POWER_DETECTED:
-        printf("USB power detected");
+        debug_printf("USB power detected");
 
         if (!nrf_drv_usbd_is_enabled()) {
             app_usbd_enable();
         }
         break;
     case APP_USBD_EVT_POWER_REMOVED:
-        printf("USB power removed");
+        debug_printf("USB power removed");
         app_usbd_stop();
         break;
     case APP_USBD_EVT_POWER_READY:
-        printf("USB ready");
+        debug_printf("USB ready");
         app_usbd_start();
         break;
     default:
@@ -195,7 +199,7 @@ void start_pingwin_usb(void) {
     ret = app_usbd_init(&usbd_config);
     APP_ERROR_CHECK(ret);
 
-    printf("Pingwin USBD CDC ACM started.\r\n");
+    debug_printf("Pingwin USBD CDC ACM started.");
 
     const app_usbd_class_inst_t* class_cdc_acm =
         app_usbd_cdc_acm_class_inst_get(&m_app_cdc_acm);
@@ -207,7 +211,8 @@ void start_pingwin_usb(void) {
         APP_ERROR_CHECK(ret);
     }
     else {
-        printf("No USB power detection enabled\r\nStarting USB now");
+        debug_printf("No USB power detection enabled");
+        debug_printf("Starting USB now");
 
         app_usbd_enable();
         app_usbd_start();

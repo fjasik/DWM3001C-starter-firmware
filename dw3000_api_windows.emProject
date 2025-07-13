@@ -292,6 +292,7 @@
       <file file_name="Src/main.c" />
       <file file_name="Src/pingwin_initiator.c" />
       <file file_name="Src/pingwin_responder.c" />
+      <file file_name="SRC/twr_shared.c" />
       <file file_name="SRC/usb.c" />
     </folder>
     <folder Name="System">
