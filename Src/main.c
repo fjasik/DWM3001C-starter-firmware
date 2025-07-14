@@ -35,7 +35,7 @@ int main(void) {
     dw_irq_init();
 
     // Legendary stuff here
-    start_pingwin_usb();
+    //start_pingwin_usb();
 
     /* Small pause before startup */
     nrf_delay_ms(2);

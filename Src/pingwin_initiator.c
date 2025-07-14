@@ -146,7 +146,7 @@ int pingwin_ss_twr_initiator(void)
             {
                 /* Clear RX error/timeout events in the DW IC status register. */
                 dwt_writesysstatuslo(SYS_STATUS_ALL_RX_TO | SYS_STATUS_ALL_RX_ERR);
-                debug_printf("Timeout or error\r\n");
+                debug_printf("Timeout or error");
                 continue;
             }
 
@@ -158,7 +158,7 @@ int pingwin_ss_twr_initiator(void)
             frame_len = dwt_getframelength();
             if (frame_len > sizeof(rx_buffer))
             {
-                debug_printf("Frame too big\r\n");
+                debug_printf("Frame too big");
                 continue;
             }
 
@@ -170,7 +170,7 @@ int pingwin_ss_twr_initiator(void)
             rx_buffer[ALL_MSG_SN_IDX] = 0;
             if (memcmp(rx_buffer, resp_msg, ALL_MSG_COMMON_LEN) != 0)
             {
-                debug_printf("Frame header mismatch\r\n");
+                debug_printf("Frame header mismatch");
                 continue;
             }
 
@@ -197,7 +197,7 @@ int pingwin_ss_twr_initiator(void)
             double distance = tof * SPEED_OF_LIGHT;
 
             /* Display computed distance on LCD. */
-            snprintf(output_buffer, sizeof(output_buffer), "Distance: %3.2f m\r\n", distance);
+            snprintf(output_buffer, sizeof(output_buffer), "Distance: %3.2f m", distance);
             printf(output_buffer);
         }
 

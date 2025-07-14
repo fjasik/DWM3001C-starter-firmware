@@ -116,7 +116,7 @@ int pingwin_ss_twr_responder(void)
         uint16_t frame_len = dwt_getframelength();
         if (frame_len > sizeof(rx_buffer)) 
         {
-            debug_printf("Frame too big\r\n");
+            debug_printf("Frame too big");
             continue;
         }
 
@@ -127,14 +127,14 @@ int pingwin_ss_twr_responder(void)
         rx_buffer[ALL_MSG_SN_IDX] = 0;
         if (memcmp(rx_buffer, poll_msg, ALL_MSG_COMMON_LEN) != 0)
         {
-            debug_printf("Frame header mismatch\r\n");
+            debug_printf("Frame header mismatch");
             continue;
         }
 
         /* Retrieve poll reception timestamp. */
         const uint64_t poll_rx_ts = get_rx_timestamp_u64();
 
-        debug_printf("Good frame Received\r\n");
+        debug_printf("Good frame received");
 
         /* Compute response message transmission time. See NOTE 7 below. */
         const uint32_t resp_tx_time = (poll_rx_ts + (POLL_RX_TO_RESP_TX_DLY_UUS * UUS_TO_DWT_TIME)) >> 8;
@@ -156,7 +156,7 @@ int pingwin_ss_twr_responder(void)
         /* If dwt_starttx() returns an error, abandon this ranging exchange and proceed to the next one. See NOTE 10 below. */
         if (ret != DWT_SUCCESS)
         {
-            debug_printf("Response transmission failure\r\n");
+            debug_printf("Response transmission failure");
             continue;
         }
 
