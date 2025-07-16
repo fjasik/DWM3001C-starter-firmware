@@ -56,8 +56,6 @@ static char m_rx_buffer[READ_SIZE];
 static char m_tx_buffer[NRF_DRV_USBD_EPSIZE];
 static bool m_send_flag = 0;
 
-#define debug_printf(fmt, ...) printf(fmt "\n\n", ##__VA_ARGS__)
-
 /**
  * @brief User event handler @ref app_usbd_cdc_acm_user_ev_handler_t
  * (headphones)
@@ -130,6 +128,7 @@ static void usbd_user_ev_handler(app_usbd_event_type_t event) {
     case APP_USBD_EVT_POWER_READY:
         debug_printf("USB ready");
         app_usbd_start();
+
         break;
     default:
         break;
@@ -173,6 +172,19 @@ static void init_bsp(void) {
 
     /* Configure LEDs */
     bsp_board_init(BSP_INIT_LEDS);
+}
+
+// We're not checking for anything here, yolo
+ret_code_t write_to_usb(const char* buffer, size_t size) {
+    static int frame_counter;
+
+    ret_code_t ret = app_usbd_cdc_acm_write(&m_app_cdc_acm, buffer, size);
+
+    if (ret == NRF_SUCCESS) {
+        ++frame_counter;
+    }
+
+    return ret;
 }
 
 void start_pingwin_usb(void) {
@@ -238,5 +250,11 @@ void start_pingwin_usb(void) {
         /* Sleep CPU only if there was no interrupt since last loop processing
          */
         __WFE();
+    }
+}
+
+void usb_spin(void) {
+    while (app_usbd_event_queue_process()) {
+        /* Nothing to do */
     }
 }
