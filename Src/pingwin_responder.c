@@ -12,7 +12,7 @@
 #define PINGWIN_SS_TWR_RESPONDER
 #if defined(PINGWIN_SS_TWR_RESPONDER)
 
-#define BEACON_NUMBER 2
+#define BEACON_NUMBER 0
 
 /* Frame sequence number, incremented after each transmission. */
 static uint8_t frame_seq_nb = 0;

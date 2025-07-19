@@ -1,3 +1,5 @@
+#ifdef IGNORE
+
 #include "debug.h"
 #include "app_error.h"
 #include "app_timer.h"
@@ -253,8 +255,4 @@ void start_pingwin_usb(void) {
     }
 }
 
-void usb_spin(void) {
-    while (app_usbd_event_queue_process()) {
-        /* Nothing to do */
-    }
-}
+#endif

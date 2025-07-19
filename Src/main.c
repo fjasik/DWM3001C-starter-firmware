@@ -1,5 +1,5 @@
 #include "nrf_delay.h"
-#include "usb.h"
+#include "usb_combined.h"
 
 #include <boards.h>
 #include <deca_spi.h>
@@ -7,7 +7,8 @@
 #include <sdk_config.h>
 #include <stdio.h>
 
-#define PINGWIN_CONFIG_INITIATOR
+#define PINGWIN_UWB_WITH_USB_INITIATOR
+//#define PINGWIN_CONFIG_INITIATOR
 //#define PINGWIN_CONFIG_RESPONDER
 
 #define UART_HWFC APP_UART_FLOW_CONTROL_DISABLED
@@ -34,10 +35,25 @@ int main(void) {
     dw_irq_init();
 
     // Legendary stuff here
-    start_pingwin_usb();
+    //start_pingwin_usb();
 
     /* Small pause before startup */
     nrf_delay_ms(2);
+
+#ifdef PINGWIN_UWB_WITH_USB_INITIATOR
+    int result = init_usb();
+    if (result != 0) {
+        while (1) { }
+    }
+
+    result = init_uwb();
+    if (result != 0) {
+        while (1) { }
+    }
+
+    usb_loop_with_uwb_initiator();
+
+#endif
 
 #ifdef PINGWIN_CONFIG_INITIATOR
     extern int pingwin_ss_twr_initiator(void);

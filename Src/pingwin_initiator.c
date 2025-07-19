@@ -1,7 +1,6 @@
 #include "debug.h"
 #include "deca_probe_interface.h"
 #include "twr_shared.h"
-#include "usb.h"
 
 #include <config_options.h>
 #include <deca_device_api.h>
