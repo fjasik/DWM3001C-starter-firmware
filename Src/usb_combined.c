@@ -217,18 +217,16 @@ int send_uwb_poll_msg(int beacon_index) {
 }
 
 // This function assumes a good RX was observed
-uint32_t receive_uwb_resp_msg() {
+uint32_t receive_uwb_resp_msg(int beacon_index) {
     uint16_t frame_len;
-
-    // Clear good RX frame event in the DW IC status register
-    dwt_writesysstatuslo(DWT_INT_RXFCG_BIT_MASK);
 
     frame_len = dwt_getframelength();
     if (frame_len > sizeof(uwb_rx_buffer))
     {
         const char* message = "Frame too big";
-        printf("%s\r\n", message);
-        //write_to_usb(message, strlen(message));
+
+        printf("Beacon %u: %s\r\n", beacon_index, message);
+        printf_to_usb("Beacon %u: %s\r\n", beacon_index, message);
 
         return 1;
     }
@@ -241,8 +239,9 @@ uint32_t receive_uwb_resp_msg() {
     if (memcmp(uwb_rx_buffer, resp_msg, ALL_MSG_COMMON_LEN) != 0)
     {
         const char* message = "Frame header mismatch";
-        printf("%s\r\n", message);
-        //write_to_usb(message, strlen(message));
+
+        printf("Beacon %u: %s\r\n", beacon_index, message);
+        printf_to_usb("Beacon %u: %s\r\n", beacon_index, message);
 
         return 2;
     }
@@ -268,14 +267,10 @@ uint32_t receive_uwb_resp_msg() {
 
     double tof = ((rtd_init - rtd_resp * (1 - clockOffsetRatio)) / 2.0) * DWT_TIME_UNITS;
     double distance = tof * SPEED_OF_LIGHT;
-
-    /* Display computed distance on LCD. */
-    static char output_buffer[32] = { 0 };
-
-    snprintf(output_buffer, sizeof(output_buffer), "Distance: %3.2f m", distance);
     
-    printf_to_usb("%s\r\n", output_buffer);
-    printf("%s\r\n", output_buffer);
+    // Print out the distance to USB and to local debugger
+    printf_to_usb("Beacon %u: %3.2f m\r\n", beacon_index, distance);
+    printf("Beacon %u: %3.2f m\r\n", beacon_index, distance);
 
     return 0;
 }
@@ -436,6 +431,16 @@ void init_systick_ms_timer(void)
 
 // ----------------- Main -----------------
 
+static int current_index = BEACON_COUNT - 1;
+
+int get_next_beacon_index(void) {
+    return current_index = (current_index + 1) % BEACON_COUNT;
+}
+
+int get_current_beacon_index(void) {
+    return current_index;
+}
+
 void usb_loop_with_uwb_initiator(void) {
     init_systick_ms_timer();
 
@@ -444,7 +449,7 @@ void usb_loop_with_uwb_initiator(void) {
 
     while (1) {
         while (app_usbd_event_queue_process()) {
-
+            // Do nothing
         }
 
         const uint32_t now = g_ms_ticks;
@@ -452,7 +457,8 @@ void usb_loop_with_uwb_initiator(void) {
             //debug_printf("Sending @ tick: %u", now);
             //printf_to_usb("Sending @ tick: %u\r\n", now);
 
-            send_uwb_poll_msg(0);
+            const int beacon_index = get_next_beacon_index();
+            send_uwb_poll_msg(beacon_index);
 
             should_send_poll = false;
             last_poll_timestamp = now;
@@ -471,100 +477,45 @@ void usb_loop_with_uwb_initiator(void) {
         //debug_printf("Result %u @ tick: %u", uwb_result, now);
         //printf_to_usb("Result %u @ tick: %u\r\n", uwb_result, now);
 
+        const int current_index = get_current_beacon_index();
+
         // Case 0: Nothing happened (no status set or no events)
         // TBD, check what the function returns when nothing happens !
         if (uwb_result == 0) {
-            // Do nothing
-        }
-        // Case 1: We received a good RX frame (RX frame CRC good)
-        else if (uwb_result & DWT_INT_RXFCG_BIT_MASK) {
-            debug_printf("Good frame received!");
-            receive_uwb_resp_msg();
-            should_send_poll = true;
-        }
-        // Case 2: RX error occurred
-        else if (uwb_result & SYS_STATUS_ALL_RX_ERR) {
-            debug_printf("RX error occured!");
-            should_send_poll = true;
-        }
-        // Case 3: RX timeout occurred
-        else if (uwb_result & SYS_STATUS_ALL_RX_TO) {
-            debug_printf("RX timeout!");
-            should_send_poll = true;
-        }
-        // Default case: Anything else, potentially unknown behavior
-        else {
-            debug_printf("Unknown UWB result: 0x%08X", uwb_result);
-            should_send_poll = true;
-        }
-
-        //__WFE();
-    }
-}
-
-
-void usb_loop_with_uwb_initiator_multi(void) {
-    init_systick_ms_timer();
-
-    uint32_t last_poll_timestamp = 0;
-    bool should_send_poll = true;
-
-    while (1) {
-        while (app_usbd_event_queue_process()) {
-
-        }
-
-        const uint32_t now = g_ms_ticks;
-        if (should_send_poll && now - last_poll_timestamp > 1000) {
-            //debug_printf("Sending @ tick: %u", now);
-            //printf_to_usb("Sending @ tick: %u\r\n", now);
-
-            send_uwb_poll_msg(0);
-
-            should_send_poll = false;
-            last_poll_timestamp = now;
-
-            // Immidiately try getting the response
-            //continue;
-        }
-
-        if (should_send_poll) {
-            // Wait
             continue;
         }
-
-        const uint32_t uwb_result = check_uwb_response();
-
-        //debug_printf("Result %u @ tick: %u", uwb_result, now);
-        //printf_to_usb("Result %u @ tick: %u\r\n", uwb_result, now);
-
-        // Case 0: Nothing happened (no status set or no events)
-        // TBD, check what the function returns when nothing happens !
-        if (uwb_result == 0) {
-            // Do nothing
-        }
         // Case 1: We received a good RX frame (RX frame CRC good)
         else if (uwb_result & DWT_INT_RXFCG_BIT_MASK) {
-            debug_printf("Good frame received!");
-            receive_uwb_resp_msg();
-            should_send_poll = true;
+            //debug_printf("Good frame received!");
+
+            // Clear good RX frame event in the DW IC status register
+            dwt_writesysstatuslo(DWT_INT_RXFCG_BIT_MASK);
+
+            receive_uwb_resp_msg(current_index);
         }
         // Case 2: RX error occurred
         else if (uwb_result & SYS_STATUS_ALL_RX_ERR) {
-            debug_printf("RX error occured!");
-            should_send_poll = true;
+            // Clear RX error event in the DW IC status register
+            dwt_writesysstatuslo(SYS_STATUS_ALL_RX_ERR);
+            
+            printf("Beacon %u: error\r\n", current_index);
+            printf_to_usb("Beacon %u: error\r\n", current_index);
         }
         // Case 3: RX timeout occurred
         else if (uwb_result & SYS_STATUS_ALL_RX_TO) {
-            debug_printf("RX timeout!");
-            should_send_poll = true;
+            // Clear RX timeout event in the DW IC status register
+            dwt_writesysstatuslo(SYS_STATUS_ALL_RX_TO);
+            
+            printf("Beacon %u: timeout\r\n", current_index);
+            printf_to_usb("Beacon %u: timeout\r\n", current_index);
         }
         // Default case: Anything else, potentially unknown behavior
         else {
-            debug_printf("Unknown UWB result: 0x%08X", uwb_result);
-            should_send_poll = true;
+            printf("Beacon %u: unknown result: 0x%08X\r\n", current_index, uwb_result);
+            printf_to_usb("Beacon %u: err 0x%08X\r\n", current_index, uwb_result);
         }
 
+        should_send_poll = true;
         //__WFE();
     }
 }
