@@ -1,10 +1,10 @@
-#include "debug.h"
+#include "configs.h"
+#include "../debug.h"
 #include "deca_probe_interface.h"
-#include "twr_shared.h"
+#include "../twr_shared.h"
 
 #include <deca_device_api.h>
 #include <deca_spi.h>
-#include <example_selection.h>
 #include <port.h>
 #include <shared_defines.h>
 #include <shared_functions.h>

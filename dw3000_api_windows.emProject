@@ -72,148 +72,15 @@
         Name="Debug"
         c_user_include_directories=".;./Src/platform" />
       <folder Name="examples">
-        <folder Name="ex_00a_reading_dev_id">
-          <file file_name="Src/examples/ex_00a_reading_dev_id/read_dev_id.c" />
-        </folder>
-        <folder Name="ex_01a_simple_tx">
-          <file file_name="Src/examples/ex_01a_simple_tx/simple_tx.c" />
-        </folder>
-        <folder Name="ex_01b_tx_sleep">
-          <file file_name="Src/examples/ex_01b_tx_sleep/tx_sleep.c" />
-          <file file_name="Src/examples/ex_01b_tx_sleep/tx_sleep_idleRC.c" />
-        </folder>
-        <folder Name="ex_01c_tx_sleep_auto">
-          <file file_name="Src/examples/ex_01c_tx_sleep_auto/tx_sleep_auto.c" />
-        </folder>
-        <folder Name="ex_01d_tx_timed_sleep">
-          <file file_name="Src/examples/ex_01d_tx_timed_sleep/tx_timed_sleep.c" />
-        </folder>
-        <folder Name="ex_01e_tx_with_cca">
-          <file file_name="Src/examples/ex_01e_tx_with_cca/tx_with_cca.c" />
-        </folder>
-        <folder Name="ex_01g_simple_tx_sts_sdc">
-          <file file_name="Src/examples/ex_01g_simple_tx_sts_sdc/simple_tx_sts_sdc.c" />
-        </folder>
-        <folder Name="ex_01h_simple_tx_pdoa">
-          <file file_name="Src/examples/ex_01h_simple_tx_pdoa/simple_tx_pdoa.c" />
-        </folder>
-        <folder Name="ex_01i_simple_tx_aes">
-          <file file_name="Src/examples/ex_01i_simple_tx_aes/simple_tx_aes.c" />
-        </folder>
-        <folder Name="ex_02a_simple_rx">
-          <file file_name="Src/examples/ex_02a_simple_rx/simple_rx.c" />
-          <file file_name="Src/examples/ex_02a_simple_rx/simple_rx_nlos.c" />
-        </folder>
-        <folder Name="ex_02c_rx_diagnostics">
-          <file file_name="Src/examples/ex_02c_rx_diagnostics/rx_diagnostics.c" />
-        </folder>
-        <folder Name="ex_02d_rx_sniff">
-          <file file_name="Src/examples/ex_02d_rx_sniff/rx_sniff.c" />
-        </folder>
-        <folder Name="ex_02e_rx_dbl_buff">
-          <file file_name="Src/examples/ex_02e_rx_dbl_buff/double_buffer_rx.c" />
-        </folder>
-        <folder Name="ex_02f_rx_with_crystal_trim">
-          <file file_name="Src/examples/ex_02f_rx_with_crystal_trim/rx_with_xtal_trim.c" />
-        </folder>
-        <folder Name="ex_02g_simple_rx_sts_sdc">
-          <file file_name="Src/examples/ex_02g_simple_rx_sts_sdc/simple_rx_sts_sdc.c" />
-        </folder>
-        <folder Name="ex_02h_simple_rx_pdoa">
-          <file file_name="Src/examples/ex_02h_simple_rx_pdoa/simple_rx_pdoa.c" />
-        </folder>
-        <folder Name="ex_02i_simple_rx_aes">
-          <file file_name="Src/examples/ex_02i_simple_rx_aes/simple_rx_aes.c" />
-        </folder>
-        <folder Name="ex_03a_tx_wait_resp">
-          <file file_name="Src/examples/ex_03a_tx_wait_resp/tx_wait_resp.c" />
-        </folder>
-        <folder Name="ex_03b_rx_send_resp">
-          <file file_name="Src/examples/ex_03b_rx_send_resp/rx_send_resp.c" />
-        </folder>
-        <folder Name="ex_03d_tx_wait_resp_interrupts">
-          <folder Name="ex_04b_cont_frame">
-            <file file_name="Src/examples/ex_04b_cont_frame/continuous_frame.c" />
-          </folder>
-          <file file_name="Src/examples/ex_03d_tx_wait_resp_interrupts/tx_wait_resp_int.c" />
-        </folder>
-        <folder Name="ex_04a_cont_wave">
-          <file file_name="Src/examples/ex_04a_cont_wave/continuous_wave.c" />
-        </folder>
-        <folder Name="ex_05a_ds_twr_init">
-          <file file_name="Src/examples/ex_05a_ds_twr_init/ds_twr_initiator.c" />
-          <file file_name="Src/examples/ex_05a_ds_twr_init/ds_twr_initiator_sts.c" />
-        </folder>
-        <folder Name="ex_05b_ds_twr_resp">
-          <file file_name="Src/examples/ex_05b_ds_twr_resp/ds_twr_responder.c" />
-          <file file_name="Src/examples/ex_05b_ds_twr_resp/ds_twr_responder_sts.c" />
-        </folder>
-        <folder Name="ex_05c_ds_twr_init_sts_sdc">
-          <file file_name="Src/examples/ex_05c_ds_twr_init_sts_sdc/ds_twr_sts_sdc_initiator.c" />
-        </folder>
-        <folder Name="ex_05d_ds_twr_resp_sts_sdc">
-          <file file_name="Src/examples/ex_05d_ds_twr_resp_sts_sdc/ds_twr_sts_sdc_responder.c" />
-        </folder>
-        <folder Name="ex_06a_ss_twr_initiator">
-          <file file_name="Src/examples/ex_06a_ss_twr_initiator/ss_twr_initiator.c" />
-          <file file_name="Src/examples/ex_06a_ss_twr_initiator/ss_twr_initiator_sts.c" />
-          <file file_name="Src/examples/ex_06a_ss_twr_initiator/ss_twr_initiator_sts_no_data.c" />
-        </folder>
-        <folder Name="ex_06b_ss_twr_responder">
-          <file file_name="Src/examples/ex_06b_ss_twr_responder/ss_twr_responder.c" />
-          <file file_name="Src/examples/ex_06b_ss_twr_responder/ss_twr_responder_sts.c" />
-          <file file_name="Src/examples/ex_06b_ss_twr_responder/ss_twr_responder_sts_no_data.c" />
-        </folder>
-        <folder Name="ex_06e_AES_ss_twr_initiator">
-          <file file_name="Src/examples/ex_06e_AES_ss_twr_initiator/ss_aes_twr_initiator.c" />
-        </folder>
-        <folder Name="ex_06f_AES_ss_twr_responder">
-          <file file_name="Src/examples/ex_06f_AES_ss_twr_responder/ss_aes_twr_responder.c" />
-        </folder>
-        <folder Name="ex_07a_ack_data_tx">
-          <file file_name="Src/examples/ex_07a_ack_data_tx/ack_data_tx.c" />
-        </folder>
-        <folder Name="ex_07b_ack_data_rx">
-          <file file_name="Src/examples/ex_07b_ack_data_rx/ack_data_rx.c" />
-        </folder>
-        <folder Name="ex_11a_spi_crc">
-          <file file_name="Src/examples/ex_11a_spi_crc/spi_crc.c" />
-        </folder>
-        <folder Name="ex_13a_gpio">
-          <file file_name="Src/examples/ex_13a_gpio/gpio_example.c" />
-        </folder>
-        <folder Name="ex_14_otp_write">
-          <file file_name="Src/examples/ex_14_otp_write/otp_write.c" />
-        </folder>
-        <folder Name="ex_15_le_pend">
-          <file file_name="Src/examples/ex_15_le_pend/le_pend_rx.c" />
-          <file file_name="Src/examples/ex_15_le_pend/le_pend_tx.c" />
-        </folder>
-        <folder Name="ex_16_pll_cal">
-          <file file_name="Src/examples/ex_16_pll_cal/pll_cal.c" />
-        </folder>
-        <folder Name="ex_17_bw_cal">
-          <file file_name="Src/examples/ex_17_bw_cal/bandwidth_calibration.c" />
-        </folder>
-        <folder Name="ex_18_timer">
-          <file file_name="Src/examples/ex_18_timer/timer_example.c" />
-        </folder>
-        <folder Name="ex_19_tx_power_adjusment">
-          <file file_name="Src/examples/ex_19_tx_power_adjustment/tx_power_adjustment_example.c" />
-        </folder>
-        <folder Name="ex_20_simple_aes">
-          <file file_name="Src/examples/ex_20_simple_aes/simple_aes.c" />
-        </folder>
-        <folder Name="MAC_802_15_4">
-          <file file_name="Src/MAC_802_15_4/mac_802_15_4.c" />
-        </folder>
-        <folder Name="MAC_802_15_8">
-          <file file_name="Src/MAC_802_15_8/mac_802_15_8.c" />
-        </folder>
         <folder Name="shared_data">
           <file file_name="Src/examples/shared_data/shared_functions.c" />
         </folder>
-        <file file_name="Src/config_options.c" />
+      </folder>
+      <folder Name="MAC_802_15_4">
+        <file file_name="Src/MAC_802_15_4/mac_802_15_4.c" />
+      </folder>
+      <folder Name="MAC_802_15_8">
+        <file file_name="Src/MAC_802_15_8/mac_802_15_8.c" />
       </folder>
       <folder Name="platform">
         <file file_name="Src/platform/deca_mutex.c" />
@@ -223,6 +90,16 @@
         <file file_name="Src/platform/deca_spi.h" />
         <file file_name="Src/platform/port.c" />
         <file file_name="Src/platform/port.h" />
+      </folder>
+      <folder Name="_legacy">
+        <file file_name="Src/_legacy/usb.c" />
+      </folder>
+      <folder Name="configurations">
+        <file file_name="Src/configurations/pingwin_initiator.c" />
+        <file file_name="Src/configurations/pingwin_responder.c" />
+        <file file_name="Src/configurations/pingwin_responder_sts.c" />
+        <file file_name="Src/configurations/usb_combined.c" />
+        <file file_name="Src/configurations/configs.c" />
       </folder>
       <folder Name="SDK">
         <folder Name="nRF_Common">
@@ -290,11 +167,7 @@
         </folder>
       </folder>
       <file file_name="Src/main.c" />
-      <file file_name="Src/pingwin_initiator.c" />
-      <file file_name="Src/pingwin_responder.c" />
-      <file file_name="Src/usb_combined.c" />
       <file file_name="SRC/twr_shared.c" />
-      <file file_name="SRC/usb.c" />
     </folder>
     <folder Name="System">
       <file file_name="nRF5_SDK_17.0.2_d674dde/modules/nrfx/mdk/ses_startup_nrf52833.s" />

@@ -1,7 +1,11 @@
-#include "usb_combined.h"
+// This file contains the first version of a working
+// USB CDC ACM module alongside the UWB ranging that
+// can run as a standalone beacon
+
+#include "configs.h"
 
 // From USB
-#include "debug.h"
+#include "../debug.h"
 #include "app_error.h"
 #include "app_timer.h"
 #include "app_usbd.h"
@@ -18,13 +22,11 @@
 #include <stdio.h>
 
 // From UWB
-#include "twr_shared.h"
+#include "../twr_shared.h"
 #include "deca_probe_interface.h"
 
-#include <config_options.h>
 #include <deca_device_api.h>
 #include <deca_spi.h>
-#include <example_selection.h>
 #include <port.h>
 #include <shared_defines.h>
 #include <shared_functions.h>

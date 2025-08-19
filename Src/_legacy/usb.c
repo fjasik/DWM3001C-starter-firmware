@@ -1,3 +1,6 @@
+// This file contains the first trials at getting
+// a USB CDC ACM driver running on the UWB module
+
 #ifdef IGNORE
 
 #include "debug.h"
