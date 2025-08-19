@@ -7,9 +7,9 @@
 #include <sdk_config.h>
 #include <stdio.h>
 
-#define PINGWIN_UWB_WITH_USB_INITIATOR
+//#define PINGWIN_UWB_WITH_USB_INITIATOR
 //#define PINGWIN_CONFIG_INITIATOR
-//#define PINGWIN_CONFIG_RESPONDER
+#define PINGWIN_CONFIG_RESPONDER
 
 #define UART_HWFC APP_UART_FLOW_CONTROL_DISABLED
 #define MAX_TEST_DATA_BYTES (15U) // max number of test bytes to be used for tx and rx
@@ -33,9 +33,6 @@ int main(void) {
     gpio_init();
     dwm3001c_spi_init();
     dw_irq_init();
-
-    // Legendary stuff here
-    //start_pingwin_usb();
 
     /* Small pause before startup */
     nrf_delay_ms(2);

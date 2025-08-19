@@ -199,8 +199,9 @@ uint32_t check_uwb_response(void) {
 
 int send_uwb_poll_msg(int beacon_index) {
     mutate_addresses(beacon_address_array[beacon_index]);
+    const int current_address = beacon_address_array[beacon_index];
 
-    printf("Polling beacon: %u\r\n", beacon_index);
+    printf("Polling beacon %u (0x%04x)\r\n", beacon_index, current_address);
 
     poll_msg[ALL_MSG_SN_IDX] = beacon_seq_num_array[beacon_index];
     dwt_writesysstatuslo(DWT_INT_TXFRS_BIT_MASK);
@@ -218,15 +219,15 @@ int send_uwb_poll_msg(int beacon_index) {
 
 // This function assumes a good RX was observed
 uint32_t receive_uwb_resp_msg(int beacon_index) {
+    const int current_address = beacon_address_array[beacon_index];
     uint16_t frame_len;
 
     frame_len = dwt_getframelength();
-    if (frame_len > sizeof(uwb_rx_buffer))
-    {
+    if (frame_len > sizeof(uwb_rx_buffer)) {
         const char* message = "Frame too big";
-
-        printf("Beacon %u: %s\r\n", beacon_index, message);
-        printf_to_usb("Beacon %u: %s\r\n", beacon_index, message);
+        
+        printf("Beacon 0x%04x: %s\r\n", current_address, message);
+        printf_to_usb("Beacon 0x%04x: %s\r\n", current_address, message);
 
         return 1;
     }
@@ -236,12 +237,11 @@ uint32_t receive_uwb_resp_msg(int beacon_index) {
     // Check that the frame is the expected response from the companion responder.
     // todo: validate sequence numbers as well
     uwb_rx_buffer[ALL_MSG_SN_IDX] = 0;
-    if (memcmp(uwb_rx_buffer, resp_msg, ALL_MSG_COMMON_LEN) != 0)
-    {
+    if (memcmp(uwb_rx_buffer, resp_msg, ALL_MSG_COMMON_LEN) != 0) {
         const char* message = "Frame header mismatch";
 
-        printf("Beacon %u: %s\r\n", beacon_index, message);
-        printf_to_usb("Beacon %u: %s\r\n", beacon_index, message);
+        printf("Beacon 0x%04x: %s\r\n", current_address, message);
+        printf_to_usb("Beacon 0x%04x: %s\r\n", current_address, message);
 
         return 2;
     }
@@ -269,8 +269,8 @@ uint32_t receive_uwb_resp_msg(int beacon_index) {
     double distance = tof * SPEED_OF_LIGHT;
     
     // Print out the distance to USB and to local debugger
-    printf_to_usb("Beacon %u: %3.2f m\r\n", beacon_index, distance);
-    printf("Beacon %u: %3.2f m\r\n", beacon_index, distance);
+    printf_to_usb("Beacon 0x%04x: %3.2f m\r\n", current_address, distance);
+    printf("Beacon 0x%04x: %3.2f m\r\n", current_address, distance);
 
     return 0;
 }
@@ -278,7 +278,8 @@ uint32_t receive_uwb_resp_msg(int beacon_index) {
 // ----------------- USB functions section -----------------
 
 static void cdc_acm_user_ev_handler(
-    const app_usbd_class_inst_t* p_inst, app_usbd_cdc_acm_user_event_t event) {
+    const app_usbd_class_inst_t* p_inst, app_usbd_cdc_acm_user_event_t event
+) {
     const app_usbd_cdc_acm_t* p_cdc_acm = app_usbd_cdc_acm_class_get(p_inst);
 
     switch (event) {
@@ -351,8 +352,7 @@ static void usbd_user_ev_handler(app_usbd_event_type_t event) {
     }
 }
 
-void printf_to_usb(const char *format, ...)
-{
+void printf_to_usb(const char *format, ...) {
     static char usb_tx_buffer[NRF_DRV_USBD_EPSIZE];
 
     va_list args;
@@ -418,13 +418,11 @@ int init_usb(void) {
 
 volatile uint32_t g_ms_ticks = 0;
 
-void SysTick_Handler(void)
-{
+void SysTick_Handler(void) {
     g_ms_ticks++; // increment every 1 ms
 }
 
-void init_systick_ms_timer(void)
-{
+void init_systick_ms_timer(void) {
     // SystemCoreClock should be defined (e.g., 64000000 for 64 MHz)
     SysTick_Config(SystemCoreClock / 1000); // 1 ms interval
 }
@@ -478,13 +476,13 @@ void usb_loop_with_uwb_initiator(void) {
         //printf_to_usb("Result %u @ tick: %u\r\n", uwb_result, now);
 
         const int current_index = get_current_beacon_index();
+        const int current_address = beacon_address_array[current_index];
 
         // Case 0: Nothing happened (no status set or no events)
         // TBD, check what the function returns when nothing happens !
         if (uwb_result == 0) {
             continue;
         }
-        // Case 1: We received a good RX frame (RX frame CRC good)
         else if (uwb_result & DWT_INT_RXFCG_BIT_MASK) {
             //debug_printf("Good frame received!");
 
@@ -493,26 +491,23 @@ void usb_loop_with_uwb_initiator(void) {
 
             receive_uwb_resp_msg(current_index);
         }
-        // Case 2: RX error occurred
         else if (uwb_result & SYS_STATUS_ALL_RX_ERR) {
             // Clear RX error event in the DW IC status register
             dwt_writesysstatuslo(SYS_STATUS_ALL_RX_ERR);
             
-            printf("Beacon %u: error\r\n", current_index);
-            printf_to_usb("Beacon %u: error\r\n", current_index);
+            printf("Beacon 0x%04x: error\r\n", current_address);
+            printf_to_usb("Beacon 0x%04x: error\r\n", current_address);
         }
-        // Case 3: RX timeout occurred
         else if (uwb_result & SYS_STATUS_ALL_RX_TO) {
             // Clear RX timeout event in the DW IC status register
             dwt_writesysstatuslo(SYS_STATUS_ALL_RX_TO);
             
-            printf("Beacon %u: timeout\r\n", current_index);
-            printf_to_usb("Beacon %u: timeout\r\n", current_index);
+            printf("Beacon 0x%04x: timeout\r\n", current_address);
+            printf_to_usb("Beacon 0x%04x: timeout\r\n", current_address);
         }
-        // Default case: Anything else, potentially unknown behavior
         else {
-            printf("Beacon %u: unknown result: 0x%08X\r\n", current_index, uwb_result);
-            printf_to_usb("Beacon %u: err 0x%08X\r\n", current_index, uwb_result);
+            printf("Beacon 0x%04x: unknown result: 0x%08X\r\n", current_address, uwb_result);
+            printf_to_usb("Beacon 0x%04x: unknown result: 0x%08X\r\n", current_address, uwb_result);
         }
 
         should_send_poll = true;

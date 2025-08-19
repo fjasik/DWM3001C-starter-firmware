@@ -12,7 +12,7 @@
 #define PINGWIN_SS_TWR_RESPONDER
 #if defined(PINGWIN_SS_TWR_RESPONDER)
 
-#define BEACON_NUMBER 0
+#define BEACON_NUMBER 2
 
 /* Frame sequence number, incremented after each transmission. */
 static uint8_t frame_seq_nb = 0;
@@ -44,8 +44,7 @@ static void set_responder_address() {
     resp_msg[8] = low_byte;
 }
 
-int pingwin_ss_twr_responder(void)
-{
+int pingwin_ss_twr_responder(void) {
     /* Display application name on LCD. */
     debug_printf("Pingwin Huddle UWB firmware SS TWR RESP v1.0");
 
