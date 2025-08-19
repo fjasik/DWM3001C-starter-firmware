@@ -3,47 +3,47 @@
 
 #ifdef IGNORE
 
-#include "debug.h"
-#include "app_error.h"
-#include "app_timer.h"
-#include "app_usbd.h"
-#include "app_usbd_cdc_acm.h"
-#include "app_usbd_serial_num.h"
-#include "boards.h"
-#include "bsp.h"
-#include "nrf_drv_clock.h"
-#include "nrf_drv_usbd.h"
+    #include "app_error.h"
+    #include "app_timer.h"
+    #include "app_usbd.h"
+    #include "app_usbd_cdc_acm.h"
+    #include "app_usbd_serial_num.h"
+    #include "boards.h"
+    #include "bsp.h"
+    #include "debug.h"
+    #include "nrf_drv_clock.h"
+    #include "nrf_drv_usbd.h"
 
-#include <stdint.h>
-#include <stdbool.h>
-#include <stddef.h>
-#include <stdio.h>
+    #include <stdbool.h>
+    #include <stddef.h>
+    #include <stdint.h>
+    #include <stdio.h>
 
-#define APP_USBD_CONFIG_EVENT_QUEUE_ENABLE 1
+    #define APP_USBD_CONFIG_EVENT_QUEUE_ENABLE 1
 
-#define LED_USB_RESUME (BSP_BOARD_LED_0)
-#define LED_CDC_ACM_OPEN (BSP_BOARD_LED_1)
-#define LED_CDC_ACM_RX (BSP_BOARD_LED_2)
-#define LED_CDC_ACM_TX (BSP_BOARD_LED_3)
+    #define LED_USB_RESUME (BSP_BOARD_LED_0)
+    #define LED_CDC_ACM_OPEN (BSP_BOARD_LED_1)
+    #define LED_CDC_ACM_RX (BSP_BOARD_LED_2)
+    #define LED_CDC_ACM_TX (BSP_BOARD_LED_3)
 
-#define BTN_CDC_DATA_SEND 0
-#define BTN_CDC_NOTIFY_SEND 1
+    #define BTN_CDC_DATA_SEND 0
+    #define BTN_CDC_NOTIFY_SEND 1
 
-#define BTN_CDC_DATA_KEY_RELEASE (bsp_event_t)(BSP_EVENT_KEY_LAST + 1)
+    #define BTN_CDC_DATA_KEY_RELEASE (bsp_event_t)(BSP_EVENT_KEY_LAST + 1)
 
-#ifndef USBD_POWER_DETECTION
-    #define USBD_POWER_DETECTION true
-#endif
+    #ifndef USBD_POWER_DETECTION
+        #define USBD_POWER_DETECTION true
+    #endif
 
 static void cdc_acm_user_ev_handler(
     const app_usbd_class_inst_t* p_inst, app_usbd_cdc_acm_user_event_t event);
 
-#define CDC_ACM_COMM_INTERFACE 0
-#define CDC_ACM_COMM_EPIN NRF_DRV_USBD_EPIN2
+    #define CDC_ACM_COMM_INTERFACE 0
+    #define CDC_ACM_COMM_EPIN NRF_DRV_USBD_EPIN2
 
-#define CDC_ACM_DATA_INTERFACE 1
-#define CDC_ACM_DATA_EPIN NRF_DRV_USBD_EPIN1
-#define CDC_ACM_DATA_EPOUT NRF_DRV_USBD_EPOUT1
+    #define CDC_ACM_DATA_INTERFACE 1
+    #define CDC_ACM_DATA_EPIN NRF_DRV_USBD_EPIN1
+    #define CDC_ACM_DATA_EPOUT NRF_DRV_USBD_EPOUT1
 
 APP_USBD_CDC_ACM_GLOBAL_DEF(
     m_app_cdc_acm,
@@ -55,7 +55,7 @@ APP_USBD_CDC_ACM_GLOBAL_DEF(
     CDC_ACM_DATA_EPOUT,
     APP_USBD_CDC_COMM_PROTOCOL_AT_V250);
 
-#define READ_SIZE 1
+    #define READ_SIZE 1
 
 static char m_rx_buffer[READ_SIZE];
 static char m_tx_buffer[NRF_DRV_USBD_EPSIZE];
@@ -87,7 +87,8 @@ static void cdc_acm_user_ev_handler(
         break;
     case APP_USBD_CDC_ACM_USER_EVT_RX_DONE: {
         ret_code_t ret;
-        debug_printf("Bytes waiting: %d", app_usbd_cdc_acm_bytes_stored(p_cdc_acm));
+        debug_printf(
+            "Bytes waiting: %d", app_usbd_cdc_acm_bytes_stored(p_cdc_acm));
         do {
             /*Get amount of data transfered*/
             size_t size = app_usbd_cdc_acm_rx_size(p_cdc_acm);
@@ -194,8 +195,7 @@ ret_code_t write_to_usb(const char* buffer, size_t size) {
 
 void start_pingwin_usb(void) {
     static const app_usbd_config_t usbd_config = {
-        .ev_state_proc = usbd_user_ev_handler
-    };
+        .ev_state_proc = usbd_user_ev_handler};
 
     ret_code_t ret = nrf_drv_clock_init();
     APP_ERROR_CHECK(ret);
@@ -244,7 +244,9 @@ void start_pingwin_usb(void) {
             static int frame_counter;
 
             size_t size = sprintf(
-                m_tx_buffer, "Pingwin USB serial device hello: %u\r\n", frame_counter);
+                m_tx_buffer,
+                "Pingwin USB serial device hello: %u\r\n",
+                frame_counter);
 
             ret = app_usbd_cdc_acm_write(&m_app_cdc_acm, m_tx_buffer, size);
             if (ret == NRF_SUCCESS) {

@@ -1,6 +1,7 @@
 /*! ----------------------------------------------------------------------------
  * @file    deca_probe_interface.h
- * @brief   Interface structure. Provides external dependencies required by the driver
+ * @brief   Interface structure. Provides external dependencies required by the
+ * driver
  *
  * @attention
  *

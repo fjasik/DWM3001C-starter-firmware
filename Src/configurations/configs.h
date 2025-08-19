@@ -1,16 +1,16 @@
-#if defined(PINGWIN_SS_TWR_INITIATOR)
+#if defined(PINGWIN_CONFIG_INITIATOR)
 
 int pingwin_ss_twr_initiator(void);
 
 #endif
 
-#if defined(PINGWIN_SS_TWR_RESPONDER)
+#if defined(PINGWIN_CONFIG_RESPONDER)
 
 int pingwin_ss_twr_responder(void);
 
 #endif
 
-#if defined(PINGWIN_SS_TWR_RESPONDER_STS)
+#if defined(PINGWIN_CONFIG_RESPONDER_STS)
 
 int pingwin_ss_twr_responder_sts(void);
 

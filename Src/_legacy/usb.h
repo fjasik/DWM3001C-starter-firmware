@@ -1,13 +1,13 @@
 #ifdef IGNORE
 
-#ifndef USB_CDC_H
-#define USB_CDC_H
+    #ifndef USB_CDC_H
+        #define USB_CDC_H
 
-#include "sdk_errors.h"
+        #include "sdk_errors.h"
 
 ret_code_t write_to_usb(char* buffer, size_t size);
 void start_pingwin_usb(void);
 
-#endif // USB_CDC_H
+    #endif // USB_CDC_H
 
 #endif
