@@ -9,21 +9,19 @@
 #include <shared_defines.h>
 #include <shared_functions.h>
 
-#if defined(PINGWIN_SS_TWR_INITIATOR)
+/* Inter-ranging delay period, in milliseconds. */
+#define RNG_DELAY_MS 1000
 
-    /* Inter-ranging delay period, in milliseconds. */
-    #define RNG_DELAY_MS 1000
-
-    /* Buffer to store received response message.
-     * Its size is adjusted to longest frame that this example code is supposed
-     * to handle. */
-    #define RX_BUF_LEN 20
+/* Buffer to store received response message.
+    * Its size is adjusted to longest frame that this example code is supposed
+    * to handle. */
+#define RX_BUF_LEN 20
 static uint8_t rx_buffer[RX_BUF_LEN];
 
-    /* Delay between frames, in UWB microseconds. See NOTE 1 below. */
-    #define POLL_TX_TO_RESP_RX_DLY_UUS 240
-    /* Receive response timeout. See NOTE 5 below. */
-    #define RESP_RX_TIMEOUT_UUS 400
+/* Delay between frames, in UWB microseconds. See NOTE 1 below. */
+#define POLL_TX_TO_RESP_RX_DLY_UUS 240
+/* Receive response timeout. See NOTE 5 below. */
+#define RESP_RX_TIMEOUT_UUS 400
 
 /* Values for the PG_DELAY and TX_POWER registers reflect the bandwidth and
  * power of the spectrum at the current temperature. These values can be
@@ -121,8 +119,7 @@ int pingwin_ss_twr_initiator(void) {
     char output_buffer[32] = {0};
 
     while (1) {
-        for (int beacon_index = 0; beacon_index < BEACON_COUNT; beacon_index++)
-        {
+        for (int beacon_index = 0; beacon_index < BEACON_COUNT; beacon_index++) {
             mutate_addresses(beacon_address_array[beacon_index]);
 
             snprintf(
@@ -171,7 +168,6 @@ int pingwin_ss_twr_initiator(void) {
 
                 const char* message = "Timeout or error";
                 printf("%s\r\n", message);
-                write_to_usb(message, strlen(message));
 
                 continue;
             }
@@ -185,7 +181,6 @@ int pingwin_ss_twr_initiator(void) {
             if (frame_len > sizeof(rx_buffer)) {
                 const char* message = "Frame too big";
                 printf("%s\r\n", message);
-                write_to_usb(message, strlen(message));
 
                 continue;
             }
@@ -201,7 +196,6 @@ int pingwin_ss_twr_initiator(void) {
             if (memcmp(rx_buffer, resp_msg, ALL_MSG_COMMON_LEN) != 0) {
                 const char* message = "Frame header mismatch";
                 printf("%s\r\n", message);
-                write_to_usb(message, strlen(message));
 
                 continue;
             }
@@ -241,10 +235,8 @@ int pingwin_ss_twr_initiator(void) {
                 distance);
 
             printf("%s\r\n", output_buffer);
-            write_to_usb(output_buffer, strlen(output_buffer));
         }
 
         Sleep(RNG_DELAY_MS);
     }
 }
-#endif

@@ -9,22 +9,19 @@
 #include <shared_defines.h>
 #include <shared_functions.h>
 
-#define PINGWIN_SS_TWR_RESPONDER
-#if defined(PINGWIN_SS_TWR_RESPONDER)
-
-    #define BEACON_NUMBER 2
+#define BEACON_NUMBER 2
 
 /* Frame sequence number, incremented after each transmission. */
 static uint8_t frame_seq_nb = 0;
 
-    /* Buffer to store received messages.
-     * Its size is adjusted to longest frame that this example code is supposed
-     * to handle. */
-    #define RX_BUF_LEN 12 // Must be less than FRAME_LEN_MAX_EX
+/* Buffer to store received messages.
+ * Its size is adjusted to longest frame that this example code is supposed
+ * to handle. */
+#define RX_BUF_LEN 12 // Must be less than FRAME_LEN_MAX_EX
 static uint8_t rx_buffer[RX_BUF_LEN];
 
-    /* Delay between frames, in UWB microseconds. See NOTE 1 below. */
-    #define POLL_RX_TO_RESP_TX_DLY_UUS 650
+/* Delay between frames, in UWB microseconds. See NOTE 1 below. */
+#define POLL_RX_TO_RESP_TX_DLY_UUS 650
 
 /* Values for the PG_DELAY and TX_POWER registers reflect the bandwidth and
  * power of the spectrum at the current temperature. These values can be
@@ -65,12 +62,10 @@ int pingwin_ss_twr_responder(void) {
 
     while (!dwt_checkidlerc()) /* Need to make sure DW IC is in IDLE_RC before
                                   proceeding */
-    {
-    };
+    {};
     if (dwt_initialise(DWT_DW_INIT) == DWT_ERROR) {
         debug_printf("INIT FAILED     ");
-        while (1) {
-        };
+        while (1) {};
     }
 
     /* Enabling LEDs here for debug so that for each TX the D1 LED will flash on
@@ -82,8 +77,7 @@ int pingwin_ss_twr_responder(void) {
      * has failed the host should reset the device */
     if (dwt_configure(&config)) {
         debug_printf("CONFIG FAILED     ");
-        while (1) {
-        };
+        while (1) {};
     }
 
     /* Configure the TX spectrum parameters (power, PG delay and PG count) */
@@ -186,4 +180,3 @@ int pingwin_ss_twr_responder(void) {
         frame_seq_nb++;
     }
 }
-#endif

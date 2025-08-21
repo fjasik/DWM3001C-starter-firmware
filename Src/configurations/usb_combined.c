@@ -31,18 +31,15 @@
 #include <shared_defines.h>
 #include <shared_functions.h>
 
-#define PINGWIN_UWB_WITH_USB_INITIATOR
-#if defined(PINGWIN_UWB_WITH_USB_INITIATOR)
-
 // ----------------- UWB declaration section -----------------
 
-    #define RNG_DELAY_MS 1000
+#define RNG_DELAY_MS 1000
 
-    #define RX_BUF_LEN 20
+#define RX_BUF_LEN 20
 static uint8_t uwb_rx_buffer[RX_BUF_LEN];
 
-    #define POLL_TX_TO_RESP_RX_DLY_UUS 240
-    #define RESP_RX_TIMEOUT_UUS 400
+#define POLL_TX_TO_RESP_RX_DLY_UUS 240
+#define RESP_RX_TIMEOUT_UUS 400
 
 extern dwt_txconfig_t txconfig_options;
 
@@ -51,31 +48,31 @@ static uint8_t beacon_seq_num_array[BEACON_COUNT] = {0, 0, 0};
 
 // ----------------- USB declaration section -----------------
 
-    #define APP_USBD_CONFIG_EVENT_QUEUE_ENABLE 1
+#define APP_USBD_CONFIG_EVENT_QUEUE_ENABLE 1
 
-    #define LED_USB_RESUME (BSP_BOARD_LED_0)
-    #define LED_CDC_ACM_OPEN (BSP_BOARD_LED_1)
-    #define LED_CDC_ACM_RX (BSP_BOARD_LED_2)
-    #define LED_CDC_ACM_TX (BSP_BOARD_LED_3)
+#define LED_USB_RESUME (BSP_BOARD_LED_0)
+#define LED_CDC_ACM_OPEN (BSP_BOARD_LED_1)
+#define LED_CDC_ACM_RX (BSP_BOARD_LED_2)
+#define LED_CDC_ACM_TX (BSP_BOARD_LED_3)
 
-    #define BTN_CDC_DATA_SEND 0
-    #define BTN_CDC_NOTIFY_SEND 1
+#define BTN_CDC_DATA_SEND 0
+#define BTN_CDC_NOTIFY_SEND 1
 
-    #define BTN_CDC_DATA_KEY_RELEASE (bsp_event_t)(BSP_EVENT_KEY_LAST + 1)
+#define BTN_CDC_DATA_KEY_RELEASE (bsp_event_t)(BSP_EVENT_KEY_LAST + 1)
 
-    #ifndef USBD_POWER_DETECTION
-        #define USBD_POWER_DETECTION true
-    #endif
+#ifndef USBD_POWER_DETECTION
+    #define USBD_POWER_DETECTION true
+#endif
 
 static void cdc_acm_user_ev_handler(
     const app_usbd_class_inst_t* p_inst, app_usbd_cdc_acm_user_event_t event);
 
-    #define CDC_ACM_COMM_INTERFACE 0
-    #define CDC_ACM_COMM_EPIN NRF_DRV_USBD_EPIN2
+#define CDC_ACM_COMM_INTERFACE 0
+#define CDC_ACM_COMM_EPIN NRF_DRV_USBD_EPIN2
 
-    #define CDC_ACM_DATA_INTERFACE 1
-    #define CDC_ACM_DATA_EPIN NRF_DRV_USBD_EPIN1
-    #define CDC_ACM_DATA_EPOUT NRF_DRV_USBD_EPOUT1
+#define CDC_ACM_DATA_INTERFACE 1
+#define CDC_ACM_DATA_EPIN NRF_DRV_USBD_EPIN1
+#define CDC_ACM_DATA_EPOUT NRF_DRV_USBD_EPOUT1
 
 APP_USBD_CDC_ACM_GLOBAL_DEF(
     m_app_cdc_acm,
@@ -87,7 +84,7 @@ APP_USBD_CDC_ACM_GLOBAL_DEF(
     CDC_ACM_DATA_EPOUT,
     APP_USBD_CDC_COMM_PROTOCOL_AT_V250);
 
-    #define READ_SIZE 1
+#define READ_SIZE 1
 static char usb_rx_buffer[READ_SIZE];
 
 void printf_to_usb(const char* format, ...);
@@ -523,5 +520,3 @@ void usb_loop_with_uwb_initiator(void) {
         //__WFE();
     }
 }
-
-#endif

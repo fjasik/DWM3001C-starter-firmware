@@ -9,22 +9,21 @@
 #include <shared_defines.h>
 #include <shared_functions.h>
 
-#define PINGWIN_CONFIG_RESPONDER_STS
-#if defined(PINGWIN_CONFIG_RESPONDER_STS)
+#if defined(IGNORE)
 
-    #define BEACON_NUMBER 2
+#define BEACON_NUMBER 2
 
 /* Frame sequence number, incremented after each transmission. */
 static uint8_t frame_seq_nb = 0;
 
-    /* Buffer to store received messages.
-     * Its size is adjusted to longest frame that this example code is supposed
-     * to handle. */
-    #define RX_BUF_LEN 12 // Must be less than FRAME_LEN_MAX_EX
+/* Buffer to store received messages.
+    * Its size is adjusted to longest frame that this example code is supposed
+    * to handle. */
+#define RX_BUF_LEN 12 // Must be less than FRAME_LEN_MAX_EX
 static uint8_t rx_buffer[RX_BUF_LEN];
 
-    /* Delay between frames, in UWB microseconds. See NOTE 1 below. */
-    #define POLL_RX_TO_RESP_TX_DLY_UUS 650
+/* Delay between frames, in UWB microseconds. See NOTE 1 below. */
+#define POLL_RX_TO_RESP_TX_DLY_UUS 650
 
 /* Values for the PG_DELAY and TX_POWER registers reflect the bandwidth and
  * power of the spectrum at the current temperature. These values can be

@@ -6,11 +6,6 @@
 #include <sdk_config.h>
 #include <stdio.h>
 
-// #define PINGWIN_UWB_WITH_USB_INITIATOR
-// #define PINGWIN_CONFIG_INITIATOR
-// #define PINGWIN_CONFIG_RESPONDER
-#define PINGWIN_CONFIG_RESPONDER_STS
-
 // This is what sets the correct configuration to be compiled
 #include "configurations/configs.h"
 
