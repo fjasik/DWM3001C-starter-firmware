@@ -32,8 +32,8 @@ dwt_config_t config_with_sts = {
     DWT_PHRRATE_STD,   /* PHY header rate. */
     (129 + 1 + 8 - 8), /* SFD timeout (preamble length + 1 + SFD length - PAC
                           size). Used in RX only. */
-    DWT_STS_MODE_ND,   /* STS disabled */
-    DWT_STS_LEN_32, /* STS length see allowed values in Enum dwt_sts_lengths_e
+    DWT_STS_MODE_ND,   /* STS no-data (SP3) */
+    DWT_STS_LEN_64, /* STS length see allowed values in Enum dwt_sts_lengths_e
                      */
     DWT_PDOA_M0     /* PDOA mode off */
 };
