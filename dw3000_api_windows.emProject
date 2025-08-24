@@ -168,6 +168,7 @@
       </folder>
       <file file_name="Src/main.c" />
       <file file_name="SRC/twr_shared.c" />
+      <file file_name="SRC/twr_shared_sts.c" />
     </folder>
     <folder Name="System">
       <file file_name="nRF5_SDK_17.0.2_d674dde/modules/nrfx/mdk/ses_startup_nrf52833.s" />

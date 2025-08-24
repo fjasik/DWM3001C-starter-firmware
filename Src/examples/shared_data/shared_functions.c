@@ -256,13 +256,13 @@ void check_for_status_errors(uint32_t reg, uint32_t* errors) {
  * @return delay_time - a uint32_t value indicating the required increase needed
  * to delay the time by.
  */
-uint32_t get_rx_delay_time_txpreamble(void) {
+uint32_t get_rx_delay_time_txpreamble(dwt_config_t* config) {
     uint32_t delay_time = 0;
     /* Standard delay values for preamble lengths of 32, 64, 72 & 128 should be
      * adequate. Additional time delay will be needed for larger preamble
      * lengths. Delay required is dependent on the preamble length as it
      * increases the frame length. */
-    switch (config_options.txPreambLength) {
+    switch (config->txPreambLength) {
     case DWT_PLEN_256:
         delay_time += 128; /* 256 - 128 */
         break;
@@ -304,13 +304,13 @@ uint32_t get_rx_delay_time_txpreamble(void) {
  * @return delay_time - a uint32_t value indicating the required increase needed
  * to delay the time by.
  */
-uint32_t get_rx_delay_time_data_rate(void) {
+uint32_t get_rx_delay_time_data_rate(dwt_config_t* config) {
     uint32_t delay_time = 0;
     /*
      * If data rate is set to 850k (slower rate),
      * increase the delay time
      */
-    switch (config_options.dataRate) {
+    switch (config->dataRate) {
     case DWT_BR_850K:
         delay_time += 200;
         break;
@@ -396,8 +396,8 @@ void set_resp_rx_timeout(uint32_t delay, dwt_config_t* config_options) {
      * The program will need to adjust the timeout value depending on the size
      * of the frame Different sized frames require different time delays.
      */
-    uint32_t delay_time = delay + get_rx_delay_time_data_rate()
-                        + get_rx_delay_time_txpreamble() + 500;
+    uint32_t delay_time = delay + get_rx_delay_time_data_rate(config_options)
+                        + get_rx_delay_time_txpreamble(config_options) + 500;
 
     /* Length of the STS effects the size of the frame also.
      * This means the delay required is greater for larger STS lengths. */

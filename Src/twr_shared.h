@@ -29,7 +29,6 @@
 // between the pingwin initiator and pingwin responder. NO STS
 extern dwt_config_t config;
 
-extern dwt_config_t config_with_sts;
 extern dwt_txconfig_t txconfig_options;
 
 extern uint8_t poll_msg[12];

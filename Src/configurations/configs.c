@@ -1,9 +1,9 @@
 #include "configs.h"
 
-#define PINGWIN_UWB_WITH_USB_INITIATOR
+//#define PINGWIN_UWB_WITH_USB_INITIATOR
 //#define PINGWIN_CONFIG_INITIATOR
 //#define PINGWIN_CONFIG_RESPONDER
-//#define PINGWIN_CONFIG_RESPONDER_STS
+#define PINGWIN_CONFIG_RESPONDER_STS
 
 void execute_main_program(void) {
 

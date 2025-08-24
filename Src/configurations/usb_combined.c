@@ -307,8 +307,7 @@ static void cdc_acm_user_ev_handler(
             debug_printf("RX: size: %lu char: %c", size, usb_rx_buffer[0]);
 
             /* Fetch data until internal buffer is empty */
-            ret =
-                app_usbd_cdc_acm_read(&m_app_cdc_acm, usb_rx_buffer, READ_SIZE);
+            ret = app_usbd_cdc_acm_read(&m_app_cdc_acm, usb_rx_buffer, READ_SIZE);
         } while (ret == NRF_SUCCESS);
 
         bsp_board_led_invert(LED_CDC_ACM_RX);

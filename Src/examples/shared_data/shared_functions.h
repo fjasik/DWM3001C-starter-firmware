@@ -74,7 +74,7 @@ void check_for_status_errors(uint32_t reg, uint32_t* errors);
  * @return delay_time - a uint32_t value indicating the required increase needed
  * to delay the time by.
  */
-uint32_t get_rx_delay_time_txpreamble(void);
+uint32_t get_rx_delay_time_txpreamble(dwt_config_t* config);
 
 /*!
  * ------------------------------------------------------------------------------------------------------------------
@@ -88,7 +88,7 @@ uint32_t get_rx_delay_time_txpreamble(void);
  * @return delay_time - a uint32_t value indicating the required increase needed
  * to delay the time by.
  */
-uint32_t get_rx_delay_time_data_rate(void);
+uint32_t get_rx_delay_time_data_rate(dwt_config_t* config);
 
 /*!
  * ------------------------------------------------------------------------------------------------------------------

@@ -25,6 +25,11 @@
   <ProjectSessionItem path="dw3000_api;dw3000_api"/>
   <ProjectSessionItem path="dw3000_api;dw3000_api;Src"/>
   <ProjectSessionItem path="dw3000_api;dw3000_api;Src;configurations"/>
+  <ProjectSessionItem path="dw3000_api;dw3000_api;Src;examples"/>
+  <ProjectSessionItem path="dw3000_api;dw3000_api;Src;examples;shared_data"/>
+  <ProjectSessionItem path="dw3000_api;dw3000_api;Src;Shared"/>
+  <ProjectSessionItem path="dw3000_api;dw3000_api;Src;Shared;dwt_uwb_driver"/>
+  <ProjectSessionItem path="dw3000_api;dw3000_api;Src;Shared;dwt_uwb_driver;Inc"/>
  </Project>
  <Register1>
   <RegisterWindow invisibleNodes="" visibleNodes="CPU - Current Context/r0;CPU - Current Context/r1;CPU - Current Context/r2;CPU - Current Context/r3;CPU - Current Context/r4;CPU - Current Context/r5;CPU - Current Context/r6;CPU - Current Context/r7;CPU - Current Context/r8;CPU - Current Context/r9;CPU - Current Context/r10;CPU - Current Context/r11;CPU - Current Context/r12;CPU - Current Context/sp(r13);CPU - Current Context/lr(r14);CPU - Current Context/pc(r15);CPU - Current Context/apsr;CPU/r0;CPU/r1;CPU/r2;CPU/r3;CPU/r4;CPU/r5;CPU/r6;CPU/r7;CPU/r8;CPU/r9;CPU/r10;CPU/r11;CPU/r12;CPU/sp(r13);CPU/lr(r14);CPU/pc(r15);CPU/xpsr;CPU/MSP;CPU/PSP;CPU/PRIMASK;CPU/BASEPRI;CPU/FAULTMASK;CPU/CONTROL;CPU/internal" binaryNodes="" asciiNodes="" openNodes="CPU - Current Context" name="dw3000_api_Debug" decimalNodes="" octalNodes="" unsignedNodes=""/>
@@ -60,7 +65,13 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="21" y="39" useTextEdit="1" path="Src/main.c" left="0" selected="1" top="0" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="17" useTextEdit="1" path="Src/main.c" left="0" top="0" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="5" y="7" useTextEdit="1" path="Src/configurations/configs.c" left="0" top="17" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="19" useTextEdit="1" path="Src/configurations/pingwin_responder.c" left="0" top="6" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="38" y="17" useTextEdit="1" path="Src/configurations/pingwin_responder_sts.c" left="0" top="66" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="30" y="41" useTextEdit="1" path="Src/twr_shared.h" left="0" selected="1" top="0" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="58" y="56" useTextEdit="1" path="SRC/twr_shared.c" left="0" top="0" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="29" y="713" useTextEdit="1" path="Shared/dwt_uwb_driver/Inc/deca_device_api.h" left="0" top="705" codecName="Default"/>
  </Files>
- <EMStudioWindow activeProject="dw3000_api" fileDialogDefaultFilter="*" autoConnectTarget="J-Link" buildConfiguration="Debug" sessionSettings="" debugSearchFileMap="/project/Src/main.c&#xa;C:/Users/Pingwin/code/DWM3001C-starter-firmware/Src/main.c&#xa;/usr/local/segger_embedded_studio_V5.42a/source/thumb_crt0.s&#xa;C:/Program Files/SEGGER/SEGGER Embedded Studio 8.24/source/thumb_crt0.s" fileDialogInitialDirectory="C:/Users/Pingwin/code/DWM3001C-starter-firmware-pingwin" debugSearchPath="" autoConnectCapabilities="3199"/>
+ <EMStudioWindow activeProject="dw3000_api" fileDialogDefaultFilter="*" autoConnectTarget="J-Link" buildConfiguration="Debug" sessionSettings="" debugSearchFileMap="/project/Src/main.c&#xa;C:/Users/Pingwin/code/DWM3001C-starter-firmware/Src/main.c&#xa;/usr/local/segger_embedded_studio_V5.42a/source/thumb_crt0.s&#xa;C:/Program Files/SEGGER/SEGGER Embedded Studio 8.24/source/thumb_crt0.s" fileDialogInitialDirectory="C:/Users/Pingwin/code/DWM3001C-starter-firmware-pingwin" debugSearchPath="" autoConnectCapabilities="3711"/>
 </session>
